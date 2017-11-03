@@ -11,7 +11,7 @@
     .tab4 {  width:100%; border:0px;  padding:0px; spacing:0px; }    
     .tdd {  padding:0px; spacing:15px; }    
     .tab5 {  width:670px; border:0px;  padding:0px; spacing:0px; }
-    .gatable  { width:420px; padding:0px; spacing:0px; }
+    .gatable  { width:420px; border:0px;  padding:0px; spacing:0px; }
     .tdw1h10  { width:1px; height:10px; }
     .tdw10h10  { width:10px; height:10px; }
      .tdw80h25  { width:80px; height:25px; }
