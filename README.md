@@ -5,7 +5,9 @@ Javascript implementation of an "Advanced Slot Machine", a Casino Game.
 
 Uses Html, JavaScript, Css, and Images.
 used Libs: jquery, jquery.mb.audio
-works on all Browsers,
+
+Works on all modern Browsers. 
+Game can be played on Touch-Devices like Smartfones or Tablets. 
 
 Copyright (C) 2016 Rainer Wess, Osnabrück, Germany
 
