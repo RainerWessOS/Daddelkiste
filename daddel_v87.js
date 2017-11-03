@@ -62,9 +62,11 @@ var startautomatik = false; // Startet automatisch das nächste Spiel
 var autostart = false; // startet die erste Scheibe nochmal, wenn keine Sonne
 var risikoautomatik = false;
 var sbtn_color_aus = "\#660000"; // Farbe der roten Button passiv
-var sbtn_color_an = "\#CC0000"; // Farbe der roten Button aktiv
-var rbtn_color_aus = "\#997700"; // Farbe der gelben Risiko-Buttons passiv
-var rbtn_color_an = "\#CCA700"; // Farbe der gelben Risiko-Buttons aktiv
+var sbtn_color_auto = "\#AA0000"; // Farbe der roten Button bei Automatik
+var sbtn_color_an = "\#FF0000"; // Farbe der roten Button aktiv
+var rbtn_color_aus = "\#806400"; // Farbe der gelben Risiko-Buttons passiv
+var rbtn_color_auto = "\#BB9700"; // Farbe der gelben Button bei Automatik
+var rbtn_color_an = "\#FFD700"; // Farbe der gelben Risiko-Buttons aktiv
 var risikophase = false;
 var spiel_laueft_noch = false; // ist praktisch während des ganzen Spiels true, geht nur unmittelbar
 // vor start des nächsten Spiels kurz auf false, verhindert Mehrfachstarts
@@ -193,7 +195,7 @@ function reset() {
 
     // setzt die Formularfelder neu, die bei einem reload der Webseite
     // sonst mit falschen Werten gefüllt bleiben
-    setInfo(" ");
+    setInfo("Zum Starten Geld einwerfen");
     zeige_Guthaben();
     punkte = 0;
     zeige_Punkte();
@@ -359,6 +361,9 @@ function starte_Spiel() {
     if (hoechststufe) Hoechststufe_zurueck();
 
     zeige_felder(0, 20, 0);
+    
+    if (startautomatik)  button_color("start_button", sbtn_color_auto);
+    else  button_color("start_button", sbtn_color_aus);
 
     if (risikoautomatik) {
         zeige_feld(rsr, 0);
@@ -436,7 +441,7 @@ function risikotaste_gedrueckt() {
             risikoautomatik = true;
             setze_risikostufe(5);
             setze_risikostufe(15);
-            button_color("risiko_button", rbtn_color_an);
+            button_color("risiko_button", rbtn_color_auto);
             setInfo("Risikoautomatik EIN ");
         }
     }
@@ -462,7 +467,7 @@ function starttaste_gedrueckt() {
         }
         else {
             startautomatik = true;
-            button_color("start_button", sbtn_color_an);
+            button_color("start_button", sbtn_color_auto);
             setInfo("Startautomatik EIN ");
         }
     }
@@ -479,15 +484,15 @@ function the_end() {
 
     button_text("mitte_button", "Autostart");
 
-    if (autostart) button_color("mitte_button", sbtn_color_an);
+    if (autostart) button_color("mitte_button", sbtn_color_auto);
     else button_color("mitte_button", sbtn_color_aus);
 
     button_color("stop_button", sbtn_color_aus);
     button_text("stop_button", "STOP");
 
-    if (!risikoautomatik) {
-        button_color("risiko_button", rbtn_color_aus);
-    }
+    if (risikoautomatik)  button_color("risiko_button", rbtn_color_auto);
+    else button_color("risiko_button", rbtn_color_aus);
+    
     spiel_laueft_noch = false;
 
     if (punkte < einsatz) {
@@ -626,7 +631,7 @@ function mittleretaste_gedrueckt() {
         }
         else {
             autostart = true;
-            button_color("mitte_button", sbtn_color_an);
+            button_color("mitte_button", sbtn_color_auto);
             setInfo("Autostart EIN ");
         }
     }
