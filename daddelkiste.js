@@ -385,6 +385,7 @@ function starte_Spiel() {
 
         if (ss == 1 && in_ss_gewonnen == false) {
             setInfo("Sonderspielzähler bleibt auf 1 bis Gewinn");
+            sonderspiel = true;
         }
         else if (ss > 0) {
             sonderspiel = true;
