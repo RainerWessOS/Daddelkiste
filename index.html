@@ -1,0 +1,506 @@
+<!DOCTYPE HTML>
+<html lang="de">
+  <head>
+  <title>Daddelkiste v0.88</title> 
+  
+  <meta charset="UTF-8" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+   <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+   <script src="js/jquery.mb.audio.js" type="text/javascript" charset="utf-8"></script>
+   <script src="js/define_audio.js" type="text/javascript" charset="utf-8"></script>
+
+  <script src="js/lade_bilder.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/daddelkiste.js" type="text/javascript" charset="utf-8"></script>
+
+   <link rel="stylesheet" type="text/css" href="style.css">
+
+</head> 
+
+<body class="webseitenfarbe" onload="reset();">
+<p>
+	  <main>  
+        <div id="options" class="overlayHidden"> 
+            
+              <h2 class="config_header">Einstellungen</h2> 
+              
+             <form class="config" oninput="rw.value = String(risiko_win.value)+' %' "> 
+<label>Gewinnwahrscheinlichkeit bei Risiko:</label><p><input type="range" id="risiko_win" value="50" min="50" max="70" step="5" list="datalist1">
+<output id="rw" for="risiko_win">50 %</output> 
+<datalist id="datalist1"> <option>50</option> <option>55</option> <option>60</option><option>65</option><option>70</option> </datalist>
+</form><p>
+    <form  class="config" oninput="spt.value=String(spiel_tempo.value)+' %' "> 
+<label>Spielablaufdauer: < schneller - langsamer ></label><p><input type="range" id="spiel_tempo" value="100" min="50" max="150" step="25" list="datalist2">
+<output id="spt" for="spiel_tempo">100 %</output> 
+<datalist id="datalist2"><option>50</option><option>75</option><option>100</option><option>125</option><option>150</option></datalist>
+</form><p>
+    <form  class="config" oninput="ar.value=String(auto_risiko.value)+' Sekunden' "> 
+<label>Risikoautomatik löst aus nach:</label><p><input type="range" id="auto_risiko" value="4" min="1" max="8" step="1" list="datalist3">
+<output id="ar" for="auto_risiko">4 Sekunden</output> 
+<datalist id="datalist3"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></datalist>
+</form><p>
+    <form  class="config" oninput="aga.value=String(auto_annahme.value)+' Sekunden' "> 
+<label>Automatische Gewinnannahme nach:</label><p><input type="range" id="auto_annahme" value="6" min="2" max="10" step="1" list="datalist4">
+<output id="aga" for="auto_annahme">6 Sekunden</output> 
+<datalist id="datalist4"><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></datalist>
+</form>
+              <p>&nbsp;<p>
+<label>Diese Simulation eines Geldspielautomaten funktioniert genau so, wie die in der Spielhalle  mit Startautomatik, Autostart, Risikoautomatik. Die Höhe bis zu der die Risikoautomatik aktiv ist wird allerdings anders eingestellt: Einfach indem du auf das Feld auf der linken oder rechten Risikoleiter klickst (oder touchst), bis zu der automatisch riskiert werden soll. Die eingestellte Höhe ist an dem kleinen hellgrünen Balken in dem jeweiligen Risikofeld ersichtlich.</label><p>
+              <p>&nbsp;<p>
+              	<label> <h4>Daddelkiste- Disco fun</h4></label><p>
+<label><h4>2016 / 2017 - Programiert von Rainer Weß aus Osnabrück</h4></label><p>
+<label> <h4>Open Source / Freeware released under GPL 2 License</h4></label><p><label>Daddelkiste wird von mir nicht mehr weiter entwickelt.</label><p>
+<label>Wer mag, kann das Projekt weiterführen.</label><p>
+<label>Der Quellcode ist leicht verständlich und gut kommentiert.</label><p>&nbsp;<p>
+              <button id="exit1" class="config_button" onclick="close_config();">schließen</button>     
+               <p>
+        </div> 
+  </main>   
+  
+  
+<!-- Beginn Geräte-Tabelle -->
+	
+<table  class="geraetefarbe tab1"><tr>
+<td class="tdw10h10 rahmen"></td>
+<td class="tdw10 rahmen"></td>
+<td class="tdw170 rahmen"></td>
+<td class="tdw400 rahmen"></td>
+<td class="tdw170 rahmen"></td>
+<td class="tdw10 rahmen"></td>
+<td class="tdw10h10 rahmen"></td>
+</tr>
+<tr>
+<td class="tdw10h rahmen"></td>
+<td colspan=5></td>
+<td class="tdw10 rahmen"></td>
+</tr>
+<tr>
+    <td class="rahmen"></td>
+    <td></td>
+
+    
+ <!-- Beginn Risikoleiter-Links-Tabelle -->
+<td><table class="geraetefarbe tab2">
+<tr>
+    <td class="tdw1h10"></td>
+    <td class="tdw80"></td>
+    <td class="tdw1"></td>
+    <td class="tdw80"></td>
+    <td class="tdw1"></td>
+</tr>
+<tr>
+    <td class="tdh1 rot" colspan=5></td>
+</tr>
+<tr>
+    <td class="tdw1 rot"></td>
+    <td colspan=3 class="ausspielung" id="gal">Ausspielung</td>
+    <td class="tdw1 rot"></td>
+</tr>
+<tr>
+	<td  class="tdw1 rot"></td>
+    <td  class="ausspielung"><img src="bilder/GA_links1.gif" width="80" height="40" alt=""></td>
+    <td class="tdw1"></td>
+    <td class="ausspielung"><img src="bilder/GA_links2.gif" width="80" height="40" alt=""></td>
+    <td  class="tdw1 rot"></td>
+</tr>
+<tr>
+	<td  class="tdw1 rot"></td>
+    <td class="tdh1 rot" colspan=3></td>
+    <td  class="tdw1 rot"></td>
+</tr>
+<tr>
+	<td  class="tdw1 rot"></td>
+    <td  class="tdh20" colspan=3></td>
+    <td></td>
+</tr>
+<tr>    
+    <td  class="tdw1 rot"></td>
+    <td class="risikofeld"  id="feld20" onclick="setze_risikostufe('20');">100 S</td>
+    <td rowspan=4></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+	<td  class="tdw1 rot"></td>
+    <td class="risikofeld"  id="feld19" onclick="setze_risikostufe('19');">50 S</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+	<td  class="tdw1 rot"></td>
+    <td class="risikofeld" id="feld18" onclick="setze_risikostufe('18');">25 S</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+	<td  class="tdw1 rot"></td>
+    <td class="risikofeld" id="feld17" onclick="setze_risikostufe('17');">12 S</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+	<td  class="tdw1 rot"></td>
+    <td class="risikofeld" id="feld16" onclick="setze_risikostufe('16');">6 S</td>
+    <td class="tdw1 gelb" rowspan=6></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td  class="tdw1 rot"></td>
+    <td class="risikofeld" id="feld15" onclick="setze_risikostufe('15');">3 S</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td></td>
+    <td class="risikofeld" id="feld14" onclick="setze_risikostufe('14');">160</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+	<td></td>
+    <td class="risikofeld" id="feld13" onclick="setze_risikostufe('13');">80</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+	<td></td>
+    <td  class="risikofeld"  id="feld12" onclick="setze_risikostufe('12');">40</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+	<td></td>
+    <td class="risikofeld" id="feld11">20</td>
+    <td class="unten">Ausspielung</td>
+    <td></td>
+</tr>
+<tr>
+	<td></td>
+    <td class="risikofeld"  id="feld10">00</td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr><td class="tdh20" colspan=5></td></tr>
+</table>
+<!-- Ende Risikoleiter-Links-Tabelle -->
+
+    </td><td>
+	
+	
+ <!-- Beginn Mitte-Tabelle -->
+<table class="tab3">
+<tr>
+<td></td>
+</tr>
+<tr>
+<td class="daddelkiste zentriert">Daddelkiste</td>
+</tr>  
+<tr>
+<td class="model zentriert">Disco  fun</td>
+</tr>  
+<tr>
+    <td
+class="tdh80 sonderspiele">Sonderspiele<br><form 
+class="geraetefarbe"><input type="text" 
+class="feld" id="Sonderspiele" size="10" maxlength="10" value="0" readonly></form></td>
+</tr>
+<tr>
+<td class="zentriert tdh200">
+
+<div id="ga_table">
+	
+<!-- Beginn Große-Ausspielung-Tabelle -->
+<table class="gatable geraetefarbe zentriert">
+   <tr>
+      <td class="tdw80h25"></td>
+      <td class="tdw80h25"></td>
+      <td rowspan=2  class="risikofeld tdw80" id="feld28">100 S</td>
+      <td class="tdw80h25"></td>
+      <td class="tdw80h25"></td>
+   </tr>
+   <tr>
+      <td class="tdw80h25"></td>
+      <td rowspan=2 class="risikofeld" id="feld21">10 S</td>
+      <td rowspan=2 class="risikofeld" id="feld24">25 S</td>
+      <td class="tdw80h25"></td>
+   </tr>
+   <tr>
+       <td rowspan=2 class="risikofeld tdh50" id="feld27">90 S</td>
+       <td rowspan=2><img src="bilder/GA.gif" width="80" height="40" alt=""></td>
+       <td rowspan=2 class="risikofeld" id="feld26">50 S</td>
+   </tr>
+   <tr>
+       <td rowspan=2 class="risikofeld" id="feld23">20 S</td>
+       <td rowspan=2 class="risikofeld" id="feld22">12 S</td>
+   <tr>
+       <td></td>
+       <td rowspan=2 class="risikofeld" id="feld25">40 S</td>
+       <td></td>
+   </tr>
+   <tr>
+       <td></td>
+       <td></td>
+       <td></td>
+       <td></td>
+   </tr>
+</table>
+<!-- Ende Große-Ausspielung-Tabelle -->
+	
+</div>
+
+</td>
+</tr><tr>
+<td class="tdh80"></td>
+</tr><tr>
+<td class="zentriert tdh250">
+	
+<div id="s_table">
+<!-- Beginn Scheibentabelle -->
+<table  class="geraetefarbe zentriert tab1">
+
+<tr>
+    <td class="tdw80h50"><img id="scheibe0" src="bilder/S1.gif" alt=""></td>
+    <td class="tdw80h50" rowspan="3"><img id="scheibe2" src="bilder/S1m.gif" alt=""></td>    
+    <td class="tdw80h50"><img id="scheibe3" src="bilder/S1.gif" alt=""></td>
+</tr>
+<tr>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td class="tdw80h50"><img id="scheibe1" src="bilder/S1.gif" alt=""></td>
+    <td class="tdw80h50"><img id="scheibe4" src="bilder/S1.gif" alt=""></td>
+</tr>
+</table>
+<!-- Ende Scheibentabelle -->
+</div>
+	
+</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+    <td class="tdh50 info"><p id="Info" class="info">Die Daddelkiste funktioniert nur bei eingeschaltetem JavaScript.</p></td>
+</tr>
+</table>
+<!-- Ende Tabelle Mitte -->
+
+
+</td><td>
+
+
+<!-- Beginn Risikoleiter-Rechts-Tabelle -->
+<table class="geraetefarbe tab2">
+<tr>
+    <td class="tdw1 tdh80"></td>
+    <td colspan=3 class="geraetefarbe tdw80 rechts">
+        <button id="config_button" onclick="show_config();" type="button">Einstellungen</button>
+    </td>
+    <td class="tdw1"></td>
+</tr>
+<tr>
+    <td class="tdh1 rot" colspan=5></td>
+
+</tr>
+<tr>
+    <td  class="tdw1 rot"></td>
+    <td colspan=3 class="tdw80 ausspielung zentriert" id="gar">Ausspielung</td>
+    <td class="tdw1 rot"></td>
+</tr>
+
+<tr>
+    <td class="tdw1 rot"></td>
+    <td class="ausspielung"><img src="bilder/GA_rechts1.gif" width="80" height="40" alt=""></td>
+    <td class="tdw1"></td>
+    <td class="ausspielung"><img src="bilder/GA_rechts2.gif" width="80" height="40" alt=""></td>
+    <td class="tdw1 rot"></td>
+</tr>
+<tr>
+    <td class="tdw1 rot"></td>
+    <td class="tdw1 rot" colspan=3></td>
+    <td class="tdw1 rot"></td>
+</tr>
+<tr>
+    <td></td>
+    <td class="tdh20" colspan=3></td>
+    <td class="tdw1 rot"></td>
+</tr>
+
+<tr>
+    <td></td>
+    <td></td>
+    <td rowspan=4></td>
+    <td class="risikofeld"   id="feld9" onclick="setze_risikostufe('9');">90 S</td>
+    <td class="tdw1 rot"></td>
+</tr>
+<tr>
+    <td></td>
+    <td></td>
+    <td class="risikofeld"  id="feld8" onclick="setze_risikostufe('8');">40 S</td>
+    <td class="tdw1 rot"></td>
+</tr>
+<tr>
+    <td></td>
+    <td></td>
+    <td class="risikofeld" id="feld7" onclick="setze_risikostufe('7');">20 S</td>
+    <td class="tdw1 rot"></td>
+</tr>
+<tr>
+    <td></td>
+    <td></td>
+    <td class="risikofeld"  id="feld6" onclick="setze_risikostufe('6');">10 S</td>
+    <td class="tdw1 rot"></td>
+</tr>
+<tr>
+    <td></td>
+    <td></td>
+    <td class="tdw1 gelb" rowspan=5></td>
+    <td class="risikofeld" id="feld5" onclick="setze_risikostufe('5');">5 S</td>
+    <td class="tdw1 rot"></td>
+</tr>
+<tr>
+    <td></td>
+    <td></td>
+    <td class="risikofeld" id="feld4" onclick="setze_risikostufe('4');">240</td>
+    <td class="tdw1 rot"></td>
+</tr>
+<tr>
+    <td></td>
+    <td></td>
+    <td class="risikofeld" id="feld3" onclick="setze_risikostufe('3');">120</td>
+    <td></td>
+</tr>
+<tr>
+    <td></td>
+    <td></td>
+    <td class="risikofeld" id="feld2" onclick="setze_risikostufe('2');">60</td>
+    <td></td>
+</tr>
+<tr>
+    <td></td>
+    <td class="unten">Ausspielung</td>
+    <td class="risikofeld" id="feld1">30</td>
+    <td></td>
+</tr>
+<tr>
+    <td></td>
+    <td></td> 
+    <td></td>
+    <td class="risikofeld" id="feld0">00</td>
+    <td></td>
+
+</tr>
+<tr><td class="tdh20" colspan=5></td></tr>
+
+</table>
+<!-- Ende Risikoleiter-Rechts-Tabelle  -->
+   
+  
+</td>   
+    <td></td>
+<td class="rahmen"></td>
+   </tr>
+   <tr><td colspan=7 class="tdh10 rahmen"></td>
+   </tr>
+
+	
+ 
+ 
+ <tr>
+     <td class="rahmen">
+ </td>
+
+ <td colspan=5>
+     
+	<form id="anzeige" class="controlpanel">
+	<table class="controlpanel tab5">
+	<tr>
+	<td class="beschriftung tdd">GELD</td>
+	<td class="beschriftung tdd">PUNKTE</td>
+	<td class="beschriftung tdd">GEWINN</td>
+	<td class="beschriftung tdd">EINSATZ</td>
+        <td></td>
+	<td  rowspan=2></td>
+	<td rowspan="2"><input type="button" value="Geldeinwurf +10 " id="geldeinwurf" class="geldeinwurf" onclick="Geldeinwurf();"></td>
+	</tr>
+	<tr>
+	<td><input type="text" class="feld" id="Guthaben" size="5" maxlength="5" value=" " readonly="readonly"></td>
+	<td><input type="text" class="feld" id="Punkte" size="5"  maxlength="5" value=" " readonly="readonly"></td>
+	<td><input type="text" class="feld" id="Gewinn" size="5"  maxlength="5" value=" " readonly="readonly"></td>
+	<td><input type="text" class="feld" id="Einsatz" size="4" maxlength="4" value="20" readonly="readonly"></td>
+        <td></td>
+	</tr>
+	</table>
+	</form>
+
+</td>
+  <td class="rahmen"></td></tr>
+  <tr><td colspan=7 class="tdh2 rahmen"></td></tr>
+  <tr><td class="rahmen"></td>
+  <td colspan=5>
+      
+	<form id="service" class="controlpanel">
+	<table  class="controlpanel tab5">
+	<tr>
+             <td class="zentriert tdd"><input value="RISIKO" class="risikobutton" onclick="risikotaste_gedrueckt();" type="button" ID="risiko_button1"></td>
+	         <td class="zentriert tdd"><input value="START" class="startstopbutton" onclick="starttaste_gedrueckt()" type="button" ID="start_button"></td>
+	         <td class="zentriert tdd"><input value="Autostart" class="startstopbutton" onclick="mittleretaste_gedrueckt();" type="button" ID="mitte_button"></td>
+             <td  class="zentriert tdd"><input value="STOP" class="startstopbutton" onclick="stoptaste_gedrueckt();" ID="stop_button" type="button"></td>        
+             <td class="zentriert tdd"><input value="RISIKO" class="risikobutton" onclick="risikotaste_gedrueckt();" type="button" ID="risiko_button2"></td>
+             </tr>
+	</table> 
+	</form>
+
+</td>
+<td class="rahmen"></td>
+</tr>
+  <tr><td colspan=7 class="tdw10h10 rahmen"></td>
+  </tr>
+
+</table>
+
+
+<div>
+<form id="funktionstest">
+<input value="kleine Ausspielung links" onclick="kleine_Ausspielung_links();" type="button">
+<input value="GA links" onclick="grosse_Ausspielung_links();" type="button">
+<input value="GA mitte" onclick="grosse_Ausspielung_mitte();" type="button"> &nbsp;
+<input value="GA rechts" onclick="grosse_Ausspielung_rechts();" type="button"> 
+<input value="kleine Ausspielung rechts" onclick="kleine_Ausspielung_rechts();" type="button">
+<input value="links_aus" onclick="links_aus();" type="button">
+<input value="links an" onclick="links_an();" type="button"></form>
+</div>
+
+
+<script type="text/javascript">
+   gal = id("gal");
+   gar = id("gar");
+
+   options = id('options');   
+
+    function show_config() { 
+          options.className = 'overlay'; 
+    }   
+
+    function close_config() { 
+         options.className = 'overlayHidden'; 
+    } 
+    
+    if(navigator.userAgent.indexOf("Firefox") > -1) {
+           id("ga_table").style.left = "133px";
+           id("s_table").style.left = "215px";
+           id("options").style.width = "600px";
+     }
+     
+    </script>
+
+
+  </body>
+
+</html>
+    
