@@ -1,0 +1,235 @@
+
+   .geraetefarbe { background-color:#005500;}
+    .controlpanel{ background-color:black; }
+    .webseitenfarbe { background-color:black; }
+    .rahmen { background-color:#666666; }  
+
+    body { margin:0px; border:0px; padding:0px; text-align: center; color:white;  }
+    .tab1 {  border:0px;  padding:0px; }
+    .tab2 {  border:0px;  padding:0px;   width:100%; }
+   .tab3 {  border:0px;  padding:0px;   width:100%; height:100% vertical-align:top;}
+    .tab4 {  width:100%; border:0px;  padding:0px; spacing:0px; }    
+    .tdd {  padding:0px; spacing:15px; }    
+    .tab5 {  width:670px; border:0px;  padding:0px; spacing:0px; }
+    .gatable  { width:420px; border:0px;  padding:0px; spacing:0px; }
+    .tdw1h10  { width:1px; height:10px; }
+    .tdw10h10  { width:10px; height:10px; }
+     .tdw80h25  { width:80px; height:25px; }
+     .tdw80h50  { width:80px; height:50px; }
+     .tdw80h60  { width:80px; height:60px; }
+     .tdw1  { width:1px;  }
+     .tdh1  { height:1px;  }
+     .tdw2  { width:2px;  }
+     .tdh2  { height:2px;  } 
+    .tdw5  { width:5px;  }  
+    .tdw10  { width:10px;  }
+    .tdh10  { height:10px;  }
+    .tdh20  { height:20px;  }
+    .tdh40  { height:40px;  }
+    .tdh50  { height:50px; }
+    .tdw80  { width:80px;  }
+    .tdh80  { height:80px;  }
+    .tdh200 { height:200px;  }
+    .tdh250 { height:250px;  }
+    .tdw170 { width:170px; }
+    .tdw400 { width:400px; }
+    .rot { background-color:red; }
+    .gelb { background-color:#FFD700; }
+     .links { text-align: left;}
+    .rechts { text-align: right; } 
+    .zentriert { text-align: center; }
+    img {  border: 0px;  }
+    div {  position: absolute;  }
+        #ga_table {
+				left: 154px;
+				top: 300px;
+				z-index: 2;
+	    }
+	    #s_table {
+				left: 238px;
+				top: 600px;
+				z-index: 2;
+	    }
+    form {  
+       font-size:16px;  
+       font-family:Verdana; 
+       font-weight:bold; 
+       color:red; 
+    }  
+    input, textarea { 
+       background-color:black; 
+       color:white; 
+       border:2px solid #666666;
+       border-radius: 3px; 
+       font-size: 16px;  
+       font-family:Verdana;
+       font-weight:bold; 
+   }
+   .audio_info {  display:none;  }
+   .risikobutton  {
+        height: 110px;    
+        width: 110px;     
+        background-color: #806400; 
+        color:white; 
+        border:1px solid #666666;
+        border-radius: 20px; 
+        font-size:16px; 
+        font-family:Verdana; 
+        font-weight:bold;
+    	text-decoration:none;
+    	text-align:center;
+    	text-shadow:1px 1px 0px #000000;
+   }    
+   .ausspielung  { 
+       background-color:black; 
+       color:red;
+       font-size:20px; 
+       font-family:Verdana; 
+       font-weight:bold; 
+    }
+    .ausspielung1 { 
+       background-color:black; 
+       color:#FFD700;
+       font-size:20px; 
+       font-family:Verdana; 
+       font-weight:bold; 
+    }
+    .startstopbutton  { 
+        height: 110px;    
+        width: 110px;   
+        background-color: #660000; 
+        color:white; 
+        border:1px solid #666666; 
+        border-radius: 20px; 
+        font-size:16px;  
+        font-family:Verdana; 
+        font-weight:bold; 
+    	text-decoration:none;
+    	text-align:center;
+    	text-shadow:1px 1px 0px #000000;
+    } 
+    .geldeinwurf  {
+        height: 50px;    
+        width: 165px;     
+        background-color: #009000; 
+        color:white; 
+        border:1px solid #004000;
+        border-radius: 10px; 
+        font-size:16px; 
+        font-family:Verdana; 
+        font-weight:bold;
+    	text-decoration:none;
+    	text-align:center;
+    	text-shadow:1px 1px 0px #000000;
+   }
+    .daddelkiste  { 
+       font-size:36px;
+       color:#FFD700; 
+       font-family:Verdana; 
+       font-weight:bold; 
+       text-align:center;
+    }
+    .model  { 
+       font-size:32px;
+       color:#FF0000; 
+       font-family:Verdana; 
+       font-weight:bold; 
+       font-style: italic;
+       text-align:center;
+    }
+   .sonderspiele  { 
+       color:#FFFFFF; 
+       font-size:20px; 
+       font-family:Verdana; 
+       font-weight:bold; 
+     }
+   .config_header  { 
+       color:#FFFFFF; 
+       font-size:28px; 
+       font-family:Verdana; 
+       font-weight:bold; 
+       margin-left:215px;
+     }
+   .config  { 
+       color:#FFFFFF; 
+       font-size:20px; 
+       font-family:Verdana; 
+       font-weight:bold; 
+       margin-left:130px;
+     }
+.config_button  { 
+      text-align:center;
+      margin-left:215px;
+     }
+    .unten  { 
+         font-size:12px; 
+         color:#FFD700; 
+         font-family:Verdana; 
+         font-weight:bold; 
+          text-align:center;
+    }
+    .info { 
+        font-size:16px; 
+        font-family:Verdana; 
+        font-weight:bold; 
+        color:white;  
+     	text-align:center;
+         height: 50px;
+    }
+    .beschriftung  { 
+        font-size:16px; 
+        font-family:Verdana; 
+        font-weight:bold; 
+    }
+    .feld { 
+        background-color:#333333; 
+        color:white; 
+        text-align:right; 
+        border:0px solid #CC0000; 
+     }
+    .risikofeld { 
+        background-image: url("bilder/risiko_passiv.gif"); 
+        background-position: center; 
+        background-repeat: no-repeat;
+        width:80px; 
+        height:60px;
+        font-size:20px; 
+        font-family:Verdana; 
+        font-weight:bold; 
+        color:black;    	
+        text-align:center;
+    }
+    .muster1 { 
+        background-image: url("bilder/GA_links2.gif"); 
+        background-position: center; 
+        background-repeat: no-repeat; 
+     }
+     .muster2 { 
+        background-image: url("bilder/GA_links2.gif"); 
+        background-position: center; 
+        background-repeat: no-repeat; 
+     }
+     .muster3 { 
+        background-image: url("bilder/GA.gif"); 
+        background-position: center; 
+        background-repeat: no-repeat; 
+     }    
+     .muster4 { 
+        background-image: url("bilder/GA_rechts1.gif"); 
+        background-position: center; 
+        background-repeat: no-repeat; 
+     }    
+     .muster5 { 
+        background-image: url("bilder/GA_rechts2.gif"); 
+        background-position: center; 
+        background-repeat: no-repeat; 
+     }
+     #funktionstest {
+          visibility:hidden;
+      }
+     main { position: relative; } 
+     button { width:165px; height:50px; font-size: 16px; background: #000; border: 1px solid #FFF; color: white;  text-align:center; }  
+     .overlay { border-radius: 20px;  padding:20px; margin:20px;  color: white;  text-align:left } 
+     .overlayHidden { display: none; z-index: 5; }
+     .overlay { width: 640px; z-index: 5; background: #005500; border: 2px solid #F00; position:absolute; top:0px; left:0px; }  
+ 
