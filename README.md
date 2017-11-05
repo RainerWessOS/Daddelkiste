@@ -9,6 +9,8 @@ used Libs: jquery, jquery.mb.audio
 Works on all modern Browsers. 
 Game can be played on Touch-Devices like Smartfones or Tablets. 
 
+<img src="https://github.com/RainerWessOS/Daddelkiste/files/Screenshot_Game.png"/>
+
 Copyright (C) 2016 Rainer Wess, Osnabrück, Germany
 
 This program is free software: you can redistribute it and/or modify
