@@ -33,8 +33,8 @@
     .tdh250 { height:250px;  }
     .tdw170 { width:170px; }
     .tdw400 { width:400px; }
-    .rot { background-color:red; }
-    .gelb { background-color:#FFD700; }
+    .rot { background-color:#FF0000; }
+    .gelb { background-color:#FFCC00; }
      .links { text-align: left;}
     .rechts { text-align: right; } 
     .zentriert { text-align: center; }
@@ -69,7 +69,7 @@
    .risikobutton  {
         height: 110px;    
         width: 110px;     
-        background-color: #806400; 
+        background-color: #997A00; 
         color:white; 
         border:1px solid #666666;
         border-radius: 20px; 
@@ -89,7 +89,7 @@
     }
     .ausspielung1 { 
        background-color:black; 
-       color:#FFD700;
+       color:#FFCC00;
        font-size:20px; 
        font-family:Verdana; 
        font-weight:bold; 
@@ -97,7 +97,7 @@
     .startstopbutton  { 
         height: 110px;    
         width: 110px;   
-        background-color: #660000; 
+        background-color: #990000; 
         color:white; 
         border:1px solid #666666; 
         border-radius: 20px; 
@@ -111,7 +111,7 @@
     .geldeinwurf  {
         height: 50px;    
         width: 165px;     
-        background-color: #009000; 
+        background-color: #009900; 
         color:white; 
         border:1px solid #004000;
         border-radius: 10px; 
@@ -124,7 +124,7 @@
    }
     .daddelkiste  { 
        font-size:36px;
-       color:#FFD700; 
+       color:#FFCC00; 
        font-family:Verdana; 
        font-weight:bold; 
        text-align:center;
@@ -163,7 +163,7 @@
      }
     .unten  { 
          font-size:12px; 
-         color:#FFD700; 
+         color:#FFCC00; 
          font-family:Verdana; 
          font-weight:bold; 
           text-align:center;
