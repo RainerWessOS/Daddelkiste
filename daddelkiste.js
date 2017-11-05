@@ -61,12 +61,14 @@ var stop = false; // verhintert start eines neuen Spiels während altes noch lä
 var startautomatik = false; // Startet automatisch das nächste Spiel
 var autostart = false; // startet die erste Scheibe nochmal, wenn keine Sonne
 var risikoautomatik = false;
-var sbtn_color_aus = "\#660000"; // Farbe der roten Button passiv
-var sbtn_color_auto = "\#AA0000"; // Farbe der roten Button bei Automatik
-var sbtn_color_an = "\#FF0000"; // Farbe der roten Button aktiv
-var rbtn_color_aus = "\#806400"; // Farbe der gelben Risiko-Buttons passiv
-var rbtn_color_auto = "\#BB9700"; // Farbe der gelben Button bei Automatik
-var rbtn_color_an = "\#FFD700"; // Farbe der gelben Risiko-Buttons aktiv
+var btn_rot_aus = "\#990000"; // Farbe der roten Button passiv
+var btn_rot_auto = "\#BB0000"; // Farbe der roten Button bei Automatik
+var btn_rot_an = "\#FF0000"; // Farbe der roten Button aktiv
+var btn_gelb_aus = "\#997A00"; // Farbe der gelben Risiko-Buttons passiv
+var btn_gelb_auto = "\#CCA300"; // Farbe der gelben Button bei Automatik
+var btn_gelb_an = "\#FFCC00"; // Farbe der gelben Risiko-Buttons aktiv
+var btn_gruen_aus = "\#006600";
+var btn_gruen_an = "\#009900";
 var risikophase = false;
 var spiel_laueft_noch = false; // ist praktisch während des ganzen Spiels true, geht nur unmittelbar
 // vor start des nächsten Spiels kurz auf false, verhindert Mehrfachstarts
@@ -102,6 +104,14 @@ function show(id) {
 function setInfo(text) {
     id("Info").innerHTML = text;
 }
+
+function button_text(myID, myText) {
+        id(myID).value = myText;
+}
+
+function button_color(myID, myColor) {
+        id(myID).style.backgroundColor = myColor;
+    }
 
 function audio_play(sprite) {
     $.mbAudio.play('audio_sprite', sprite);
@@ -211,39 +221,6 @@ function reset() {
    
 }
 
-function button_text(myID, myText) {
-
-    var myButton;
-
-    if (myID == "risiko_button") {
-        myButton = id("risiko_button1");
-        myButton.value = myText;
-        myButton = id("risiko_button2");
-        myButton.value = myText;
-    }
-    else {
-        myButton = id(myID);
-        myButton.value = myText;
-    }
-}
-
-function button_color(myID, myHEX) {
-
-    var myColor = myHEX;
-    var myButton;
-
-    if (myID == "risiko_button") {
-        myButton = id("risiko_button1");
-        myButton.style.backgroundColor = myColor;
-        myButton = id("risiko_button2");
-        myButton.style.backgroundColor = myColor;
-    }
-    else {
-        myButton = id(myID);
-        myButton.style.backgroundColor = myColor;
-    }
-}
-
 function zufallszahl(min, max) {
 
     // liefert tatsächlich gleichverteilte Zufallszahlen
@@ -265,7 +242,7 @@ function Geld_zu_Punkte() {
     zeige_Punkte();
     zeige_Guthaben();
     setTimeout("zum_starten_auffordern();", 3 * spiel_tempo);
-    setTimeout("button_color('start_button', sbtn_color_an);", 8 * spiel_tempo);
+    setTimeout("button_color('start_button', btn_rot_an);", 8 * spiel_tempo);
 
 }
 
@@ -286,7 +263,7 @@ function Geldeinwurf() {
 
     guthaben = guthaben + 10;
     zeige_Guthaben();
-    button_color("geldeinwurf", "\#006000");
+    button_color("geldeinwurf", btn_gruen_aus);
     setTimeout("umbuchen_animieren1()", 8 * spiel_tempo);
 }
 
@@ -321,7 +298,7 @@ function stop_Scheibe_2() {
         s_stop++;
         s2 = zufallszahl(1, 12);
         zeige_Scheibe(2, s2);
-        button_color("stop_button", sbtn_color_aus);
+        button_color("stop_button", btn_rot_aus);
         setTimeout("Gewinnermittlung();", 10 * spiel_tempo);
         
     }
@@ -342,7 +319,7 @@ function Scheiben_loeschen() {
     for (var i = 0; i <= 4; i++) {
         id("scheibe" + i).src = Scheibe[i][0].src;
     }
-    button_color("stop_button", sbtn_color_an);
+    button_color("stop_button", btn_rot_an);
     setTimeout("stop_Scheibe_1()", 15 * spiel_tempo);
 }
 
@@ -363,8 +340,8 @@ function starte_Spiel() {
 
     zeige_felder(0, 20, 0);
     
-    if (startautomatik)  button_color("start_button", sbtn_color_auto);
-    else  button_color("start_button", sbtn_color_aus);
+    if (startautomatik)  button_color("start_button", btn_rot_auto);
+    else  button_color("start_button", btn_rot_aus);
 
     if (risikoautomatik) {
         zeige_feld(rsr, 0);
@@ -397,7 +374,7 @@ function starte_Spiel() {
     }
     else {
         setInfo("Zum Starten Geld einwerfen");
-        button_color("geldeinwurf", "\#009000");
+        button_color("geldeinwurf", btn_gruen_an);
     }
 }
 
@@ -436,14 +413,16 @@ function risikotaste_gedrueckt() {
             risikoautomatik = false;
             zeige_feld(rsr, 0);
             zeige_feld(rsl, 0);
-            button_color("risiko_button", rbtn_color_aus);
+            button_color("risiko_button1", btn_gelb_aus);   
+            button_color("risiko_button2", btn_gelb_aus);
             setInfo("Risikoautomatik AUS ");
         }
         else {
             risikoautomatik = true;
             setze_risikostufe(5);
             setze_risikostufe(15);
-            button_color("risiko_button", rbtn_color_auto);
+            button_color("risiko_button1", btn_gelb_auto);
+            button_color("risiko_button2", btn_gelb_auto);
             setInfo("Risikoautomatik EIN ");
         }
     }
@@ -464,12 +443,12 @@ function starttaste_gedrueckt() {
     if (spiel_laueft_noch) {
         if (startautomatik) {
             startautomatik = false;
-            button_color("start_button", sbtn_color_aus);
+            button_color("start_button", btn_rot_aus);
             setInfo("Startautomatik AUS ");
         }
         else {
             startautomatik = true;
-            button_color("start_button", sbtn_color_auto);
+            button_color("start_button", btn_rot_auto);
             setInfo("Startautomatik EIN ");
         }
     }
@@ -486,26 +465,32 @@ function the_end() {
 
     button_text("mitte_button", "Autostart");
 
-    if (autostart) button_color("mitte_button", sbtn_color_auto);
-    else button_color("mitte_button", sbtn_color_aus);
+    if (autostart) button_color("mitte_button", btn_rot_auto);
+    else button_color("mitte_button", btn_rot_aus);
 
-    button_color("stop_button", sbtn_color_aus);
+    button_color("stop_button", btn_rot_aus);
     button_text("stop_button", "STOP");
 
-    if (risikoautomatik)  button_color("risiko_button", rbtn_color_auto);
-    else button_color("risiko_button", rbtn_color_aus);
+    if (risikoautomatik) {
+         button_color("risiko_button1", btn_gelb_auto);
+         button_color("risiko_button2", btn_gelb_auto);
+    }
+    else  {
+        button_color("risiko_button1", btn_gelb_aus);
+        button_color("risiko_button2", btn_gelb_aus);
+    }
     
     spiel_laueft_noch = false;
 
     if (punkte < einsatz) {
-        button_color("geldeinwurf", "\#009000");
+        button_color("geldeinwurf", btn_gruen_an);
         setTimeout('setInfo("Zum Starten Geld enwerfen");', 10 * spiel_tempo);
     }
     else if (startautomatik && !hoechststufe) {
         starte_Spiel();
     }
     else {
-        button_color('start_button', sbtn_color_an);
+        button_color('start_button', btn_rot_an);
         zum_starten_auffordern();
     }
 }
@@ -557,7 +542,7 @@ function annehmen() { // Gewinnannahme durch Automat
 
     if (!gewinn_angenommen && (gewinn > 0 || ss_neu > 0)) {
         gewinn_angenommen = true;
-        button_color("stop_button", sbtn_color_aus);
+        button_color("stop_button", btn_rot_aus);
         if (!hoechststufe) {
             audio_stop('risiko1');
             audio_stop('risiko2');
@@ -615,7 +600,7 @@ function Teilgewinn_annehmen(tga) {
 function Hoechststufe_erreicht() {
 
     hoechststufe = true;
-    button_color("mitte_button", sbtn_color_aus);
+    button_color("mitte_button", btn_rot_aus);
     audio_play('hauptgewinn');
 
     intH = setInterval(lichtorgel, 800);
@@ -628,12 +613,12 @@ function mittleretaste_gedrueckt() {
     if (!risikophase) {
         if (autostart) {
             autostart = false;
-            button_color("mitte_button", sbtn_color_aus);
+            button_color("mitte_button", btn_rot_aus);
             setInfo("Autostart AUS ");
         }
         else {
             autostart = true;
-            button_color("mitte_button", sbtn_color_auto);
+            button_color("mitte_button", btn_rot_auto);
             setInfo("Autostart EIN ");
         }
     }
@@ -681,19 +666,20 @@ function starte_risiko() {
     button_text("stop_button", "Annehmen");
 
     if (gs == 9 || gs == 20) {
-        button_color("stop_button", sbtn_color_an);
+        button_color("stop_button", btn_rot_an);
         Hoechststufe_erreicht();
     }
     else if (((0 < gs && gs < 9) || (10 < gs && gs < 20)) && !gewinn_angenommen) {
 
-        button_color("risiko_button", rbtn_color_an);
+        button_color("risiko_button1", btn_gelb_an);
+        button_color("risiko_button2", btn_gelb_an);
         button_text("mitte_button", "Teilen");
-        button_color("stop_button", sbtn_color_an);
+        button_color("stop_button", btn_rot_an);
 
         if ((1 < gs && gs < 9) || (11 < gs && gs < 20)) {
-            button_color("mitte_button", sbtn_color_an);
+            button_color("mitte_button", btn_rot_an);
         }
-        else button_color("mitte_button", sbtn_color_aus);
+        else button_color("mitte_button", btn_rot_aus);
 
         animiere_risiko();
     }
@@ -740,7 +726,7 @@ function animiere_risiko() {
                 zeige_feld(rfeld, 0);
                 zeige_feld(ns, 1);
                 setInfo(" ");
-                button_color("stop_button", sbtn_color_aus);
+                button_color("stop_button", btn_rot_aus);
             }
             starte_risiko();
         }
@@ -760,7 +746,7 @@ function animiere_ausspielung(von_, bis_, feld_) {
     // oder ("ga", 1, 8, 1)
 
     button_text("stop_button", "STOP");
-    button_color("stop_button", sbtn_color_an);
+    button_color("stop_button", btn_rot_an);
 
     von = von_;
     bis = bis_;
