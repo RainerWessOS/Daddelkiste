@@ -1,9 +1,9 @@
 # Daddelkiste
 
 
-Javascript implementation of an "Advanced Slot Machine", a Casino Game. 
+Javascript implementation of an "advanced slot machine", a penny arcade casino game. 
 
-Uses Html, JavaScript, Css, and Images.
+Uses HTML, JavaScript, CSS, and Images.
 used Libs: jquery, jquery.mb.audio
 
 Works on all modern Browsers. 
