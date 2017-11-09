@@ -7,9 +7,12 @@ Uses HTML, JavaScript, CSS, and Images.
 used Libs: jquery, jquery.mb.audio
 
 Works on all modern Browsers. 
-Game can be played on Touch-Devices like Smartfones or Tablets. 
+Game can be played on Touch-Devices like Smartfones or Tablets. Everything needed to play the game is in the package. If you download and unzip it, you can play it stand alone - without internet connection.
+
+Screenshot:
 
 <img src="https://github.com/RainerWessOS/Daddelkiste/blob/master/Screenshot_Game.png"/>
+
 
 Copyright (C) 2016 Rainer Wess, Osnabrück, Germany
 
