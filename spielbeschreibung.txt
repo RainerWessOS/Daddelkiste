@@ -1,0 +1,23 @@
+Daddelkiste Disco fun
+
+Spielbeschreibung
+
+Simulation eines Geldspielautomaten mit
+drei Scheiben, die in der Reihenfolge links, rechts, mitte stoppen. Die linke Scheibe kann einmal nachgestartet, die beiden anderen können gestoppt werden. 
+
+Es kann eine Startatomatik eingeschaltet werden, die das nächste Spiel automatisch startet.
+ 
+Die AutoStart Automatik startet die linke Scheibe einmal neu, wenn keine Sonne erschienen ist.
+
+Zeigen die Scheiben 3x den gleichen Betrag oder 2x den gleichen
+Betrag und Sonne auf der mittleren Scheibe, wird dieser gewonnen. Gibt es zwei Gewinnkombinationen - nur bei Sonne in der Mitte möglich- , wird der höhere Gewinn gegeben.
+
+Wenn auf den drei Scheiben jeweils eine Sonne erscheint, gibt es eine Serienausspielung auf der rechten Seite - von 5 bis 90 Sonderspiele. Erscheinen vier Sonnen, gibt es eine Serienausspielung auf der linken Seite - von 3 bis 100 Sonderspiele.Bei fünf Sonnen wird die große Ausspielung in der Mitte gegeben - 10 bis 100 Sonderspiele.
+
+Alle Gewinne können risikiert werden. Gewinne oberhalb des Mindestgewinns der jeweiligen Risikoleiter können geteilt werden, auch mehrmals nacheinander, so oft gewünscht. Nach dem Teilen wird dann eine Stufe tiefer zum Risiko angeboten und die Differenz wird auf dem jeweilen Punkte- oder Sonderspiele-Zähler aufgezählt.
+
+Es kann eine Risiko-Automatik eingeschaltet werden, die jeden Gewinn risikiert. Die Höhe bis zu der automatisch riskiert werden soll ist frei einstellbar, indem bei eingeschalteter Risikoautomatik auf die entsprechenden Felder auf der rechten und linken Risikoleiter getippt bzw. geklickt wird. Die eingestellte Höhe ist an dem kleinen hellgrünen Balken im jeweiligen Risikofeld ersichtlich.
+
+Im Sonderspiel werden bei Gewinnkombination und bei  gestreiften Feldern auf der mittleren Scheibe 200 Punkte gewonnen. In Sonderspielen kann nur bei Sonne auf der mittleren Scheibe, oder bei bei einem Sonderspielzählerstand kleiner als 10 riskiert werden, wobei 40 Punkte gleich angenommen und der Rest zum Risiko angeboten wird.  Es können unbegrenzt viele Sonderspiele gewonnen werden. Wird bei Ablauf von Sonderspielen kein Gewinn erzielt, bleibt der Sonderspielzähler auf 1, bis  gewonnen wird.
+
+Allle Ereignisse werden auch klanglich untermalt. Bei erreichen der Höchststufe auf der jeweiligen Risikoleiter, also bei 90 oder 100 Sonderspielen, wird eine  Lichtanimation gestartet und der Radetzky-Marsch gespielt.

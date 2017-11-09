@@ -1,0 +1,11 @@
+Daddel box disco fun 
+
+Game Description 
+
+Simulation of a slot machine with three discs that stop in the order left, right, center. The left disc can be restarted once, the other two can be stopped. It can be turned on an AutoStart automatic, which restarts the left disc once when no sun has appeared. Three equal amounts give the corresponding amount as win, the sun on the middle disc is considered a wild card. If there are two winning combinations - only possible with sun in the middle - the higher win is given. If there is one sun on each of the three discs, there will be a series playout on the right - from 5 to 90 special games. Appear four suns, there will be a series playout on the left side - from 3 to 100 special games. If five suns apear, the big playout in the middle - 10 to 100 special games. 
+
+All wins can be risked. Wins above the minimum field of the respective risk ladders can be taken partially, even several times, as often as desired. After splitting, one level lower is offered to the risk and the difference is counted on the respective points or special games counter.
+
+It can be turned on a risk automatic, which risks any wins. The amount up to which you want to automatically risk is freely adjustable by tapping or clicking on the corresponding field on the risk ladder while the risk automatic is activated.
+
+In the special game, 200 points are won, with 40 taken immediately and the rest offered for risk. If there was no win at the end of the special games, the special game counter remains at 1 until won.
