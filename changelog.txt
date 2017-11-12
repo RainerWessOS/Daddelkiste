@@ -1,0 +1,44 @@
+changelog
+
+Version 0.90  2017.11.12
+Einstellung, Anleitung und Uber-Seite
+neu mit Navbar und erweitert
+
+Version 0.88  2017.11.04
+Layout für Chrome angepasst
+kleinere Änderungen Einstellungsseite
+Buttonfarben bei eingeschalteten Automatiken eingebaut
+
+Version 0.87  2016.04.24_10
+Einstellungsseite, Risiko, Geschwindigkeit 
+und Automatiken einstellbar
+Zeitverzogerung bei Aufruf von the_end entfernt, 
+verhindert Mehrfachstarts
+Scheiben stopbar gemacht
+
+Version 0.86  2016.04.22_10
+Imagearray fur Scheiben geändert, 
+jetzt zweidimensional, 
+Scheibenstopfunktionen optimiert
+
+Version 0.84  2016.04.16_2
+neue function get verkürzt getElementById
+lichtorgel gefixed, Ausspielung blinky, blinky
+
+Version 0.83  2016.04.15_20
+Sonderspiel wird am Anfang des Spiels abgezogen, 
+neue Variable sonderspiel true/false, fur korrekte Gewinnermittlung des letzten Sonderspiels
+
+neue Gewinnermittlung integriert
+fehlerkorrektur in Gewinnermittlung, s2 statt s1
+
+Version 0.82.  2016.04.14_2
+autostart und startautomatik getauscht
+Layout gerichtet
+
+
+Version 0.75  2016.04.12
+Alte Gewinnermittlung
+
+ToDo
+Multiplikator fur hohere Einsatze einbauen
