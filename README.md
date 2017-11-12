@@ -9,6 +9,8 @@ used Libs: jquery, jquery.mb.audio
 Works on all modern Browsers. 
 Game can be played on Touch-Devices like Smartfones or Tablets. Everything needed to play the game is in the package. If you download and unzip it, you can play it stand alone - without internet connection.
 
+New Version 0.90 now with multi-language support, the game sutomatically starts in the language of your browser.
+
 Screenshot:
 
 <img src="https://github.com/RainerWessOS/Daddelkiste/blob/master/Screenshot_Game.png"/>
