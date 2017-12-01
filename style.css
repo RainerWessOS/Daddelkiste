@@ -1,0 +1,504 @@
+/* Stylesheet for Daddelkiste Duomatic - Version 0.93 */
+
+body {
+  margin: 0px;
+  padding: 0px;
+  font-size: 16px;
+  font-family: Verdana;
+  text-align: center;
+  align: center;
+  color: white;
+  background-color: black;
+}
+
+img {
+  border: 0px;
+}
+
+/* Verstecktes Testmenue  
+von hidden auf visible setzen */
+
+#Funktionstest {
+	visibility: hidden;
+	// visibility: visible;
+}
+
+#Geraet_div {
+	position: absolute;
+	margin: auto;
+	align: center;
+	}
+	
+#Geraet {
+  border: 0;
+  padding: 0;
+  spacing: 0;
+  border-collapse: collapse;
+  border: 10px solid #333333;
+  background-color: #003333;
+}
+
+#Risikoleiter_links {
+  border: 0px;
+  padding: 0px;
+  spacing: 0px;
+  width: 100%;
+  border-collapse: collapse;
+  background: transparent;
+}
+
+.ausspielung {
+  background-color: black;
+  color: red;
+  font-size: 20px;
+  font-family: Verdana;
+  font-weight: bold;
+  text-align: center;
+  align: center;
+}
+
+.muster1 {
+  background-image: url("images/GA_links2.gif");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.muster2 {
+  background-image: url("images/GA_links2.gif");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.risikofeld {
+  background-image: url("images/risiko_passiv.gif");
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 80px;
+  height: 60px;
+  font-size: 20px;
+  font-family: Verdana;
+  font-weight: bold;
+  color: black;
+  text-align: center;
+}
+
+.unten {
+  font-size: 12px;
+  color: #FFCC00;
+  font-family: Verdana;
+  font-weight: bold;
+  text-align: center;
+}
+
+#cfg_button {
+  color: #FFFFFF;
+  text-align: center;
+  height: 50px;
+  width: 160px;
+}
+
+#Risikoleiter_rechts {
+  border: 0px;
+  padding: 0px;
+  spacing: 0px;
+  width: 100%;
+  border-collapse: collapse;
+  background: transparent;
+}
+
+.muster4 {
+  background-image: url("images/GA_rechts1.gif");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.muster5 {
+  background-image: url("images/GA_rechts2.gif");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#Mitte-Tabelle {
+  border: 0px;
+  padding: 0px;
+  spacing: 0px;
+  width: 100%;
+  height: 100%; 
+  align: center;
+  vertical-align: top;
+  border-collapse: collapse;
+  background: transparent;
+}
+
+#L_Geraet {
+  font-size: 48px;
+  color: #FFCC00;
+  font-family: Verdana;
+  font-weight: bold;
+  text-align: center;
+}
+
+#L_Typ {
+  font-size: 32px;
+  color: #FF0000;
+  font-family: Verdana;
+  font-weight: bold;
+  font-style: italic;
+  text-align: center;
+}
+
+#GA_Tabelle {
+  width: 420px;
+  border: 0px;
+  padding: 0px;
+  spacing: 0px;
+  background: transparent;
+}
+
+.muster3 {
+  background-image: url("images/GA.gif");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#Scheibentabelle {
+  border: 0px;
+  align: center;
+  padding: 0px;
+  spacing: 0px;
+  border-collapse: collapse;
+  background: transparent;
+}
+
+#Info {
+  font-size: 16px;
+  font-family: Verdana;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  height: 50px;
+}
+
+#Anzeige {
+  width: 100%;
+  border: 0px;
+  padding: 0px;
+  spacing: 0px;
+  align: center;
+  text-align: center;
+  background-color: #000000;
+  border-collapse: collapse;
+  border: 15px solid #000000;
+}
+
+#Anzeige_form {
+  font-size: 16px;
+  font-family: Verdana;
+  font-weight: bold;
+  color: red;
+}
+
+.beschriftung {
+  font-size: 16px;
+  font-family: Verdana;
+  font-weight: bold;
+}
+
+input, textarea {
+  background-color: black;
+  color: white;
+  border: 2px solid #666666;
+  border-radius: 3px;
+  font-size: 16px;
+  font-family: Verdana;
+  font-weight: bold;
+}
+
+.feld {
+  background-color: #333333;
+  color: white;
+  font-family: Verdana;
+  text-align: right;
+  border: 0px solid #CC0000;
+}
+
+#geldeinwurf {
+  height: 50px;
+  width: 180px;
+  background-color: #009900;
+  border: 1px solid #004000;
+  border-radius: 10px;
+  color: white;
+  font-size: 20px;
+  font-family: Verdana;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  text-shadow: 1px 1px 0px #000000;
+}
+
+#Taster {
+  width: 100%;
+  border: 0px;
+  padding: 0px;
+  spacing: 0px;
+  background-color: #000000;
+  border-collapse: collapse;
+  border: 15px solid #000000;
+}
+  
+ #Taster_form {
+  font-size: 16px;
+  font-family: Verdana;
+  font-weight: bold;
+  color: white;
+}
+
+.startstopbutton {
+  height: 110px;
+  width: 110px;
+  background-color: #990000;
+  border: 1px solid #666666;
+  border-radius: 20px;
+  color: white;
+  font-size: 16px;
+  font-family: Verdana;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  text-shadow: 1px 1px 0px #000000;
+}
+
+.risikobutton {
+  height: 110px;
+  width: 110px;
+  background-color: #997A00;
+  border: 1px solid #666666;
+  border-radius: 20px;
+  color: white;
+  font-size: 16px;
+  font-family: Verdana;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  text-shadow: 1px 1px 0px #000000;
+}
+
+div {
+  position: absolute;
+}
+
+main {
+  font-family: Verdana;
+  font-size: 16px;
+}
+
+.test_button {
+  height: 50px;
+  font-size: 16px;
+  background-color: #4D8080;
+  border: 1px solid #FFF;
+  color: white;
+  text-align: center;
+}
+
+.overlay {
+  border-radius: 20px;
+  padding: 20px;
+  margin: 20px;
+  color: white;
+  text-align: left;
+  align: center;
+  width: 750px; 
+  z-index: 5;
+  background: #005500;
+  border: 2px solid #F00;
+  top: 0px;
+  left: 0px;
+}
+
+.overlayHidden {
+  display: none;
+  z-index: 5;
+}
+
+ul.topnav {
+  list-style-type: none;
+  font-size:18px;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+ul.topnav li {
+  float: left;
+}
+
+ul.topnav li.right {
+  float: right;
+}
+
+ul.topnav li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+ul.topnav li a:hover:not(.active) {
+  background-color: #111;
+}
+
+ul.topnav li a.active {
+  background-color: #009900;
+}
+
+.config {
+  color: #FFFFFF;
+  font-size: 16px;
+  font-family: Verdana;
+  font-weight: bold;
+  margin-left: 80px;
+}
+
+.mode_button {
+    height: 50px;
+    width: 190px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+.tabcolor {
+	width: 190px;
+	height: 50px;
+    border-collapse: collapse;
+    border: 5px solid #333333;
+}
+
+.config_button {
+  color: #FFFFFF;
+  text-align: center;
+  height: 50px;
+  width: 160px;
+  margin-left: 305px;
+}
+
+.links {
+  text-align: left;
+  align: left;
+}
+
+.rechts {
+  text-align: right;
+  align: right;
+}
+
+.zentriert {
+  text-align: center;
+  align: center;
+}
+
+.rot {
+  background-color: #FF0000;
+}
+
+.gelb {
+  background-color: #FFCC00;
+}
+
+.schwarz {
+  background-color: #000000;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 30px;
+ /* Set a specific slider handle width */
+  height: 30px;
+ /* Slider handle height */
+  background: #4d8080;
+}
+
+.slider::-moz-range-thumb {
+  width: 30px;
+ /* Set a specific slider handle width */
+  height: 30px;
+ /* Slider handle height */
+  background: #009900;
+  }
+
+#c_anl {
+  font-size: 16px;
+  font-family: Verdana;
+}
+	
+a.git  { 
+  font-family: Verdana;
+  font-weight: bold;
+  font-size:16px;
+  Color: #FFCC00;
+}
+
+.tdw80h25 {
+  width: 80px;
+  height: 25px;
+}
+
+.tdw80h50 {
+  width: 80px;
+  height: 50px;
+}
+
+.tdw3 {
+  width: 3px;
+}
+.tdh3 {
+  height: 3px;
+}
+
+.tdw10 {
+  width: 10px;
+}
+
+.tdh10 {
+  height: 10px;
+}
+
+.tdw20 {
+  width: 20px;
+}
+
+.tdh20 {
+  height: 20px;
+}
+
+.tdh30 {
+  height: 30px;
+}
+
+.tdh40 {
+  height: 40px;
+}
+
+.tdh50 {
+  height: 50px;
+}
+
+.tdh80 {
+  height: 80px;
+}
+
+.tdh200 {
+  height: 200px;
+}
+
+.tdh250 {
+  height: 250px;
+}
+
+// END
+	

@@ -1,0 +1,671 @@
+<!DOCTYPE HTML>
+<html lang="de">
+
+<head>
+	<title>Daddelkiste</title>
+
+	<meta charset="UTF-8" />
+
+     <script src="js/load_images.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/play_audio.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/lang.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/daddelkiste.js" type="text/javascript" charset="utf-8"></script>
+	
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+
+<body onload="reset();">  
+	
+<center>
+	<div id="Geraet_div">
+		
+	<main>
+		<div id="options" class="overlayHidden">
+
+			<ul class="topnav">
+				<li><a href="#c1" id="c1a" class="active">Settings</a></li>
+				<li><a href="#c1" id="c2a" onclick="show_instruction();">Instructions</a></li>
+				<li><a href="#c1" id="c3a" onclick="show_think();">Something to think</a></li>
+				<li class="right"><a href="#c1" id="c4a" onclick="show_about();">About</a></li>
+			</ul>
+			<p>&nbsp;<p>
+				<table><tr><td width="300" valign="top">
+							<form class="config">
+<span id="game_mode">Please choose game type: (Duomatic - Two games in one)</span>
+								<p>
+							<input type="button" ID="mode_games" value="Special Games" class="mode_button" onclick="change_game_mode('games');"><p>
+								<input type="button" ID="mode_points" value="Points only" class="mode_button" onclick="change_game_mode('points');">
+								</form><p>&nbsp;<p>
+									<form class="config">
+<span id="color_theme">Farbschema / Ger&auml;tefarbe:</span>
+								<p>
+							<input type="button" ID="theme_green" value="Gr&uuml;n" class="mode_button" onclick="change_color_theme('green');">
+<p>
+								<input type="button" ID="theme_blue" value="Grau Blau" class="mode_button" onclick="change_color_theme('blue');">
+									<p>
+										<input type="button" ID="theme_black" value="Petrol" class="mode_button" onclick="change_color_theme('black');">
+									<p>
+								</form><p>&nbsp;<p>
+									</td><td valign="top">
+							<form class="config" oninput="rw.value = String(risiko_win.value)+' %' ">
+								<label id="winning">Risk winning percentage:</label>
+								<p>
+									<input type="range" id="risiko_win" class="slider" value="50" min="50" max="70" step="5" list="datalist1">
+									<output id="rw" for="risiko_win">50 %</output>
+									<datalist id="datalist1">
+                        <option>50</option>
+                        <option>55</option>
+                        <option>60</option>
+                        <option>65</option>
+                        <option>70</option>
+                    </datalist>
+							</form>
+							<p>&nbsp;
+								<p>
+									<form class="config" oninput="spt.value=String(spiel_tempo.value)+' %' ">
+										<label id="speed">Game duration:
+                        < fast - slow>
+                    </label>
+										<p>
+											<input type="range" id="spiel_tempo" class="slider" value="100" min="50" max="150" step="25" list="datalist2">
+											<output id="spt" for="spiel_tempo">100 %</output>
+											<datalist id="datalist2">
+                            <option>50</option>
+                            <option>75</option>
+                            <option>100</option>
+                            <option>125</option>
+                            <option>150</option>
+                        </datalist>
+									</form>
+									<p>&nbsp;
+										<p>
+											<form class="config" oninput="ar.value=String(auto_risiko.value) + cfgText[10]">
+												<label id="r_auto">Risk-automatic engages after:</label>
+												<p>
+													<input type="range" id="auto_risiko" class="slider" value="4" min="1" max="8" step="1" list="datalist3">
+													<output id="ar" for="auto_risiko">4 Seconds</output>
+													<datalist id="datalist3">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                            </datalist>
+											</form>
+											<p>&nbsp;
+												<p>
+													<form class="config" oninput="aga.value=String(auto_annahme.value) + cfgText[10]">
+														<label id="t_auto">Automatic winning acceptance :</label>
+														<p>
+															<input type="range" id="auto_annahme" class="slider" value="6" min="2" max="10" step="1" list="datalist4">
+															<output id="aga" for="auto_annahme">6 Seconds</output>
+															<datalist id="datalist4">
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                    <option>10</option>
+                                </datalist>
+													</form>
+													</td></tr></table>
+															<p>&nbsp; <p>
+															<input type="button" class="config_button" id="exit1" onclick="close_config();" value="Close"></input>
+										<p>
+		</div>
+
+		<div id="instruction" class="overlayHidden">
+
+			<ul class="topnav">
+				<li><a href="#c2" id="c1b" onclick="show_config();">Settings</a></li>
+				<li><a href="#c2" id="c2b" class="active">Instructions</a></li>
+				<li><a href="#c2" id="c3b" onclick="show_think();">Something to think</a></li>
+				<li class="right"><a href="#c2" id="c4b" onclick="show_about();">About</a></li>
+			</ul>
+			<p>&nbsp;<p>
+				<span id="c_instr"></span>
+				 <p>&nbsp;<p>
+
+							<input type="button" class="config_button"  id="exit2" onclick="close_instruction();" value="Close"></input>
+							<p>
+		</div>
+<div id="think" class="overlayHidden">
+
+			<ul class="topnav">
+				<li><a href="#c3" id="c1c" onclick="show_config();">Settings</a></li>
+			    <li><a href="#c3" id="c2c" onclick="show_instruction();">Instructions</a></li>
+				<li><a href="#c3" id="c3c" class="active">Something to think</a></li>
+				<li class="right"><a href="#c3" id="c4c" onclick="show_about();">About</a></li>
+			</ul>
+			<p>&nbsp;<p>
+				<span id="c_think"></span>
+				 <p>&nbsp; <p>
+
+							<input type="button" class="config_button"  id="exit3" onclick="close_think();" value="Close"></input>
+							<p>
+		</div>
+
+		<div id="about" class="overlayHidden">
+			<ul class="topnav">
+				<li><a href="#c4" id="c1d" onclick="show_config();">Settings</a></li>
+				<li><a href="#c4" id="c2d" onclick="show_instruction();">Instructions</a></li>
+				<li><a href="#c4" id="c3d" onclick="show_think();">Something to think</a></li>
+				<li class="right"><a href="#c4" id="c4d" class="active">About</a></li>
+			</ul>
+			<p>&nbsp; <p>
+							<span>
+                <h4>Daddelkiste "Duomatic"  -  Version: 0.93</h4>
+                    <p>
+                    <h4>2017 - &copy;  Rainer Weß, Osnabr&uuml;ck, Germany</h4>
+                    <p>
+                    <h4>Open Source / Freeware released under GPL 2.0 License</h4>
+                    <p>&nbsp;<p>
+                    <h4 id="c_github">Herunterladen k&ouml;nnt ihr die neuste Version auf Github.com:</h4>
+ <a href="https://github.com/RainerWessOS/Daddelkiste" target="_new" class="git">https://github.com/RainerWessOS/Daddelkiste</a>
+     <p>&nbsp;<p>
+ 	</span>
+     <span id="c_hint"></span>
+	 <p>&nbsp; <p>
+									<input type="button"  class="config_button"  id="exit4" onclick="close_about();" value="Close"></input>
+									<p>
+		</div>
+
+	</main>
+
+	<!-- Beginn Geräte-Tabelle -->
+
+	<table id="Geraet">
+		<tr>
+			<td class="tdw10"></td>
+            <td>
+            	
+			<!-- Beginn Risikoleiter-Links-Tabelle -->
+			
+				<table id="Risikoleiter_links">
+					<tr>
+						<td colspan="5" class="tdh20"></td>
+					</tr>
+					<tr>
+						<td class="tdh3 rot" colspan="5"></td>
+					</tr>
+					<tr>
+						<td class="tdw3 rot"></td>
+						<td colspan="3" class="ausspielung" id="L_GAL">PLAYOUT</td>
+						<td class="tdw3 rot"></td>
+					</tr>
+					<tr>
+						<td class="tdw3 rot"></td>
+						<td class="ausspielung"><img src="images/GA_links1.gif" width="80" height="40" alt=""></td>
+						<td class="tdw3 schwarz"></td>
+						<td class="ausspielung"><img src="images/GA_links2.gif" width="80" height="40" alt=""></td>
+						<td class="tdw3 rot"></td>
+					</tr>
+					<tr>
+						<td class="tdh3 rot" colspan="5"></td>
+					</tr>
+					<tr>
+						<td class="tdw3 rot"></td>
+						<td class="tdh20" colspan="3"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="tdw3 rot"></td>
+						<td class="risikofeld" id="feld20" onclick="setze_risikostufe('20');">100 S</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="tdw3 rot"></td>
+						<td class="risikofeld" id="feld19" onclick="setze_risikostufe('19');">50 S</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="tdw3 rot"></td>
+						<td class="risikofeld" id="feld18" onclick="setze_risikostufe('18');">25 S</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="tdw3 rot"></td>
+						<td class="risikofeld" id="feld17" onclick="setze_risikostufe('17');">12 S</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="tdw3 rot"></td>
+						<td class="risikofeld" id="feld16" onclick="setze_risikostufe('16');">6 S</td>
+						<td class="tdw3 gelb"></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="tdw3 rot"></td>
+						<td class="risikofeld" id="feld15" onclick="setze_risikostufe('15');">3 S</td>
+						<td class="tdw3 gelb"></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td class="risikofeld" id="feld14" onclick="setze_risikostufe('14');">160</td>
+						<td class="tdw3 gelb"></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td class="risikofeld" id="feld13" onclick="setze_risikostufe('13');">80</td>
+						<td class="tdw3 gelb"></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td class="risikofeld" id="feld12" onclick="setze_risikostufe('12');">40</td>
+						<td class="tdw3 gelb"></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td class="risikofeld" id="feld11">20</td>
+						<td class="tdw3 gelb"></td>
+						<td class="unten" id="L_KAL">PLAYOUT</td>
+						<td></td>
+						
+					</tr>
+					<tr>
+						<td></td>
+						<td class="risikofeld" id="feld10">00</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="tdh20" colspan=5></td>
+					</tr>
+				</table>
+				<!-- Ende Risikoleiter-Links-Tabelle -->
+
+			</td>
+			<td>
+
+				<!-- Beginn Mitte-Tabelle -->
+					
+				<table id="Mitte_Tabelle">
+					<tr>
+						<td class="tdh20"></td>
+					</tr>
+					<tr>
+						<td class="tdh50" id="L_Geraet">Daddelkiste</td>
+					</tr>
+					<tr>
+						<td id="L_Typ">Duomatic</td>
+					</tr>
+					<tr>
+						<td class="tdh80"></td>
+					</tr>
+					<tr>
+						<td class="zentriert tdh200">
+<center>
+								<!-- Beginn Große-Ausspielung-Tabelle -->
+									
+								<table id="GA_Tabelle">
+									<tr>
+										<td class="tdw80h25"></td>
+										<td class="tdw80h25"></td>
+										<td rowspan=2 class="risikofeld tdw80" id="feld28">100 S</td>
+										<td class="tdw80h25"></td>
+										<td class="tdw80h25"></td>
+									</tr>
+									<tr>
+										<td class="tdw80h25"></td>
+										<td rowspan=2 class="risikofeld" id="feld21">10 S</td>
+										<td rowspan=2 class="risikofeld" id="feld24">25 S</td>
+										<td class="tdw80h25"></td>
+									</tr>
+									<tr>
+										<td rowspan=2 class="risikofeld tdh50" id="feld27">90 S</td>
+										<td rowspan=2><img src="images/GA.gif" width="80" height="40" alt=""></td>
+										<td rowspan=2 class="risikofeld" id="feld26">50 S</td>
+									</tr>
+									<tr>
+										<td rowspan=2 class="risikofeld" id="feld23">20 S</td>
+										<td rowspan=2 class="risikofeld" id="feld22">12 S</td>
+										<tr>
+											<td></td>
+											<td rowspan=2 class="risikofeld" id="feld25">40 S</td>
+											<td></td>
+										</tr>
+										<tr>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+								</table>
+								<!-- Ende Große-Ausspielung-Tabelle -->
+
+</center>
+						</td>
+						</tr>
+						<tr>
+							<td class="tdh20"></td>
+						</tr>
+						<tr>
+							<td class="zentriert tdh250">
+<center>
+									<!-- Beginn Scheibentabelle -->
+									<table id="Scheibentabelle">
+
+										<tr>
+											<td class="tdw80h50"><img id="scheibe0" src="images/S1.gif" alt=""></td>
+											<td class="tdw80h50" rowspan="3"><img id="scheibe2" src="images/S1m.gif" alt=""></td>
+											<td class="tdw80h50"><img id="scheibe3" src="images/S1.gif" alt=""></td>
+										</tr>
+										<tr>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td class="tdw80h50"><img id="scheibe1" src="images/S1.gif" alt=""></td>
+											<td class="tdw80h50"><img id="scheibe4" src="images/S1.gif" alt=""></td>
+										</tr>
+									</table>
+									
+									<!-- Ende Scheibentabelle -->
+										
+							</center>
+							
+							</td>
+						</tr>
+						<tr>
+							<td class="tdh30 zentriert">
+								<p id="Info">.. Loading - please wait ..</p>
+							</td>
+						</tr>
+				</table>
+				<!-- Ende Tabelle Mitte -->
+
+			</td>
+			<td>
+
+				<!-- Beginn Risikoleiter-Rechts-Tabelle -->
+					
+				<table id="Risikoleiter_rechts">
+					<tr>
+						<td colspan="5" class="tdh80 rechts">
+							<input type="button" id="cfg_button" onclick="show_config();" value="Settings"></input>
+						</td>
+					</tr>
+					<tr>
+						<td class="tdh3 rot" colspan="5"></td>
+					</tr>
+					<tr>
+						<td class="tdw3 rot"></td>
+						<td colspan=3 class="ausspielung" id="L_GAR">PLAYOUT</td>
+						<td class="tdw3 rot"></td>
+					</tr>
+
+					<tr>
+						<td class="tdw3 rot"></td>
+						<td class="ausspielung"><img src="images/GA_rechts1.gif" width="80" height="40" alt=""></td>
+						<td class="tdw3 schwarz"></td>
+						<td class="ausspielung"><img src="images/GA_rechts2.gif" width="80" height="40" alt=""></td>
+						<td class="tdw3 rot"></td>
+					</tr>
+					<tr>
+						<td class="tdh3 rot" colspan="5"></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td class="tdh20" colspan="3"></td>
+						<td class="tdw3 rot"></td>
+					</tr>
+
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td class="risikofeld" id="feld9" onclick="setze_risikostufe('9');">90 S</td>
+						<td class="tdw3 rot"></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td class="risikofeld" id="feld8" onclick="setze_risikostufe('8');">40 S</td>
+						<td class="tdw3 rot"></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td class="risikofeld" id="feld7" onclick="setze_risikostufe('7');">20 S</td>
+						<td class="tdw3 rot"></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td class="risikofeld" id="feld6" onclick="setze_risikostufe('6');">10 S</td>
+						<td class="tdw3 rot"></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td class="tdw3 gelb"></td>
+						<td class="risikofeld" id="feld5" onclick="setze_risikostufe('5');">5 S</td>
+						<td class="tdw3 rot"></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td class="tdw3 gelb"></td>
+						<td class="risikofeld" id="feld4" onclick="setze_risikostufe('4');">240</td>
+						<td class="tdw3 rot"></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td class="tdw3 gelb"></td>
+						<td class="risikofeld" id="feld3" onclick="setze_risikostufe('3');">120</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td class="tdw3 gelb"></td>
+						<td class="risikofeld" id="feld2" onclick="setze_risikostufe('2');">60</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td class="unten" id="L_KAR">PLAYOUT</td>
+						<td class="tdw3 gelb"></td>
+						<td class="risikofeld" id="feld1">30</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td class="risikofeld" id="feld0">00</td>
+						<td></td>
+
+					</tr>
+					<tr>
+						<td class="tdh20" colspan=5></td>
+					</tr>
+
+				</table>
+				<!-- Ende Risikoleiter-Rechts-Tabelle  -->
+
+			</td>
+			<td class="tdw10"></td>
+			</tr>
+			<tr>
+
+				<td colspan=5>
+
+					<form id="Anzeige_form">
+						<table id="Anzeige">
+							<tr>
+								<td rowspan="2" class="tdw10"></td>
+								<td class="beschriftung" id="L_Geld">COINS</td>
+								<td class="beschriftung" id="L_Punkte">POINTS</td>
+						        <td class="beschriftung" id="L_Spiele">GAMES</td>
+								<td class="beschriftung" id="L_Gewinn">WIN</td>
+								<td class="beschriftung" id="L_Einsatz">BET</td>
+								<td rowspan="2" class="rechts">
+									<input type="button" value="insert 10 coins" id="geldeinwurf" onclick="Geldeinwurf();">
+								</td>
+								<td rowspan="2" class="tdw20"></td>
+							</tr>
+							<tr>
+								<td>
+									<input type="text" class="feld" id="Geld" size="4" maxlength="4" value=" " readonly="readonly">
+								</td>
+								<td>
+									<input type="text" class="feld" id="Punkte" size="5" maxlength="5" value=" " readonly="readonly">
+								</td>
+								<td>
+									<input type="text" class="feld" id="Spiele" size="5" maxlength="5" value=" " readonly="readonly">
+								</td>
+								<td>
+									<input type="text" class="feld" id="Gewinn" size="5" maxlength="5" value=" " readonly="readonly">
+								</td>
+								<td>
+									<input type="text" class="feld" id="Einsatz" size="4" maxlength="4" value="20" readonly="readonly">
+								</td>
+							</tr>
+						</table>
+					</form>
+
+				</td>
+			</tr>
+			<tr>
+				<td colspan=5>
+
+					<form id="Taster_form">
+						<table id="Taster">
+							<tr>
+								<td class="zentriert">
+									<input value="RISK" class="risikobutton" onclick="risikotaste_gedrueckt();" type="button" ID="risiko_button1">
+								</td>
+								<td class="zentriert">
+									<input value="START" class="startstopbutton" onclick="starttaste_gedrueckt()" type="button" ID="start_button">
+								</td>
+								<td class="zentriert">
+									<input value="Autostart" class="startstopbutton" onclick="mittleretaste_gedrueckt();" type="button" ID="mitte_button">
+								</td>
+								<td class="zentriert">
+									<input value="STOP" class="startstopbutton" onclick="stoptaste_gedrueckt();" ID="stop_button" type="button">
+								</td>
+								<td class="zentriert">
+									<input value="RISK" class="risikobutton" onclick="risikotaste_gedrueckt();" type="button" ID="risiko_button2">
+								</td>
+							</tr>
+						</table>
+					</form>
+
+				</td>
+			</tr>
+
+	</table>
+
+	
+		<center>
+			<p>&nbsp;<p>
+		
+		<form id="Funktionstest" class="zentriert">
+			<input value="kleine Ausspielung links" onclick="funktionstest(0);" type="button" class="test_button">
+				&nbsp;
+			<input value="GA links" onclick="funktionstest(2);" type="button" class="test_button">
+				&nbsp;
+			<input value="GA mitte" onclick="funktionstest(4);" type="button" class="test_button"> &nbsp;
+			<input value="GA rechts" onclick="funktionstest(3);" type="button" class="test_button">
+				&nbsp;
+			<input value="kleine Ausspielung rechts" onclick="funktionstest(1);" type="button" class="test_button">
+		</form>
+		</center>
+
+	<script type="text/javascript">
+	
+		var options = id('options');
+		var instruction = id('instruction');
+		var think = id('think');
+		var about = id('about');
+
+		function show_config() {
+			options.className = 'overlay';
+			instruction.className = 'overlayHidden';
+			think.className = 'overlayHidden';
+			about.className = 'overlayHidden';
+		}
+
+		function close_config() {
+			options.className = 'overlayHidden';
+
+			risiko_win = id("risiko_win").value;
+			spiel_tempo = id("spiel_tempo").value;
+			auto_risiko = id("auto_risiko").value;
+			auto_annahme = id("auto_annahme").value;
+			saveSettings();
+		}
+
+		function show_instruction() {
+			instruction.className = 'overlay';
+			options.className = 'overlayHidden';
+			think.className = 'overlayHidden';
+			about.className = 'overlayHidden';
+		}
+
+		function close_instruction() {
+			instruction.className = 'overlayHidden';
+		}
+function show_think() {
+			think.className = 'overlay';
+			options.className = 'overlayHidden';
+			instruction.className = 'overlayHidden';
+			about.className = 'overlayHidden';
+		}
+
+		function close_think() {
+			think.className = 'overlayHidden';
+
+		}
+		
+		function show_about() {
+			about.className = 'overlay';
+			options.className = 'overlayHidden';
+			instruction.className = 'overlayHidden';
+            think.className = 'overlayHidden';
+			
+		}
+
+		function close_about() {
+			about.className = 'overlayHidden';
+
+		}
+
+
+	</script>
+	
+</div>
+</center>
+
+</body>
+</html>
