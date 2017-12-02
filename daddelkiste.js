@@ -118,11 +118,12 @@ var btn_rot_an = "#FF0000"; // Farbe der roten Button aktiv
 var btn_gelb_aus = "#997A00"; // Farbe der gelben Risiko-Buttons passiv
 var btn_gelb_auto = "#CCA300"; // Farbe der gelben Button bei Automatik
 var btn_gelb_an = "#FFCC00"; // Farbe der gelben Risiko-Buttons aktiv
-
+// Alternative Farben
+// 
 // Für die Farbschemen
-var bg_gruen = "#005500";
-var bg_blau = "#204040";
-var bg_black = "#003333";
+var bg_gruen = "#003322";
+var bg_blau = "#002233";
+var bg_black = "#003030";
 var btn_gruen_aus = "#006600";
 var btn_gruen_an = "#009900";
 var btn_blau_aus = "#2F4F4F";
