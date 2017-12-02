@@ -14,8 +14,6 @@ Screenshots:
 
 <img src="https://github.com/RainerWessOS/Daddelkiste/blob/master/Daddelkiste_Duomatic.png" />
 
-<img src="https://github.com/RainerWessOS/Daddelkiste/blob/master/Daddelkiste_Settings.png" />
-
 
 Copyright (C) 2017 Rainer Wess, Osnabrück, Germany
 
