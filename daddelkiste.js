@@ -824,7 +824,7 @@ function starte_Spiel() {
 				sonderspiel = false;
 				if (intS) {
 					clearInterval(intS);
-					setColor("games", "#FF0000");
+					setColor("L_Spiele", "#FF0000");
 				}
 			}
 
