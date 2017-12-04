@@ -1,12 +1,12 @@
 //*******************************************************************
-//      Daddelkiste Duomatic Version 0.93 
+//      Daddelkiste Duomatic Version 0.94 
 //      JavaScript implementation of a penny arcade casino game
 //
 //      2017 Copyright (C) Rainer Wess, Osnabrück, Germany
 //      Open Source / Freeware - released under GPL 2.0
 //*******************************************************************
 
-// Localisation for Dattelkiste Duomatic - Version 0.93
+// Localisation for Dattelkiste Duomatic - Version 0.94
 
 // Supported Languages: 
 // de, en, fr, it, nl, es , pt , sv
@@ -75,7 +75,7 @@ btnText = [
 "Mit Sonderspielen",
 "Nur Punkte",
 "Gruen",
-"Grau Blau",
+"Blau",
 "Petrol"
 ];
 
@@ -161,7 +161,7 @@ btnText = [
 "Jeux Speciaux",
 "Points",
 "Green",
-"Gray Blue",
+"Blue",
 "Petrol"
 ];
 
@@ -243,7 +243,7 @@ btnText = [
 "Giochi Speciali",
 "Punti",
 "Green",
-"Gray Blue",
+"Blue",
 "Petrol"
 ]; 
 
@@ -327,7 +327,7 @@ btnText = [
 "Speciale Spellen",
 "Points",
 "Green",
-"Gray Blue",
+"Blue",
 "Petrol"
 ]; 
 
@@ -411,7 +411,7 @@ btnText = [
 "Juegos Especiales",
 "Puntos",
 "Green",
-"Gray Blue",
+"Blue",
 "Petrol"
 ]; 
 
@@ -495,7 +495,7 @@ btnText = [
 "Jogos Especiais",
 "Pontos",
 "Green",
-"Gray Blue",
+"Blue",
 "Petrol"
 ];
 
@@ -579,7 +579,7 @@ btnText = [
 "Special Spel",
 "Poang",
 "Green",
-"Gray Blue",
+"Blue",
 "Petrol"
 ]; 
 
@@ -663,7 +663,7 @@ btnText = [
 "Special Games",
 "Points",
 "Green",
-"Gray Blue",
+"Blue",
 "Petrol"
 ];
 

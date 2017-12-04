@@ -19,8 +19,8 @@ img {
 von hidden auf visible setzen */
 
 #Funktionstest {
-	visibility: hidden;
-	// visibility: visible;
+	 visibility: hidden;
+	 // visibility: visible;
 }
 
 #Geraet_div {
@@ -35,7 +35,7 @@ von hidden auf visible setzen */
   spacing: 0;
   border-collapse: collapse;
   border: 10px solid #333333;
-  background-color: #003333;
+  background-color: #111111;
 }
 
 #Risikoleiter_links {

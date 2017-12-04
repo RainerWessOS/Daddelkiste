@@ -1,8 +1,8 @@
 //*********************************************************************
-//      Daddelkiste Disco Points Version 0.90
+//      Daddelkiste Disco Duomatic Version 0.94
 //      Javascript implementation of a penny arcade casino game
 //
-//      Copyright (C) 2017 Rainer Wess, Osnabrück, Germany
+//      2017 Copyright (C) Rainer Wess, Osnabrück, Germany
 //      Open Source / Freeware - released under GPL 2.0
 //*********************************************************************
 

@@ -1,14 +1,15 @@
 
 //*******************************************************************
-//      Daddelkiste Duomatic Version 0.93 
+//      Daddelkiste Duomatic Version 0.94 
 //      Javascript implementation of a penny arcade casino game
 //
-//      Copyright (C) 2017 Rainer Wess, Osnabrück, Germany
+//      2017 Copyright (C) Rainer Wess, Osnabrück, Germany
 //      Open Source / Freeware - released under GPL 2.0
 //*******************************************************************
 
 var geld = 0;
 var punkte = 0;
+var ss_neu = 0;
 var ss = 0;
 var gewinn = 0;
 var einsatz = 20;
@@ -17,8 +18,15 @@ var einsatz = 20;
 var s1 = 0; // left disc
 var s2 = 0; // disc in the middle
 var s3 = 0; // right disc
-var s_stop = 1; // Zählvariable fürs stoppen der Scheiben per Stop-Taste
+var s_stop = 0; // Zählvariable fürs stoppen der Scheiben per Stop-Taste
 
+// Timeouts für Scheibensteuerung notwendig für restart (Scheibe 1) und fürs stoppen von Hand
+var T1_disc1;
+var T2_disc1;
+var T_disc2;
+var T1_disc3;
+var T2_disc3;
+                        
 // Definition der Scheibenbelegung
 // 999 = Sonne
 var disc = [];
@@ -40,23 +48,23 @@ var gpu_games = [0, 30, 60, 120, 240, 0, 0, 0, 0, 0, 0, 20, 40, 80, 160, 0, 0, 0
 // Aus gs die Sonderspiele ermitteln
 var gss = [0, 0, 0, 0, 0, 5, 10, 20, 40, 90, 0, 0, 0, 0, 0, 3, 6, 12, 25, 50, 100];
 
-
 var gam = 0; // Gewinn-Feldnummer bei der großen Ausspielung mitte (Felder 21-28)
 
 // Ausspielreihenfolge GA rechts(4-9)/links(15-20)/mitte(21-28)
 var arf = [0, 0, 0, 0, 4, 8, 6, 9, 5, 7, 0, 0, 0, 0, 0, 15, 19, 17, 20, 16, 18, 21, 26, 23, 28, 24, 27, 22, 25];
 
 var gs = 0; // Gewinnstufe, Kern der Risikofunktion, 0-9 fur rechts, 10-20 links
-var rsr = 5; // Risikostufe rechts, default Wert, bis zum Erreichen von 5 SS
-var rsl = 15; // Risikostufe links, default Wert, bis zum Erreichen von 3 SS
+var rsr = 5; // Risikostufe rechts, default Wert, bis zum Erreichen von 5 SS / 500 P.
+var rsl = 15; // Risikostufe links, default Wert, bis zum Erreichen von 3 SS / 300
 
 // *****************
 // Boolsche Variablen
 
 var startautomatik = false; // Startet automatisch das nächste Spiel
 var autostart = false; // startet die erste Scheibe nochmal, wenn keine Sonne
-var risikoautomatik = false;
+var risikoautomatik = false; // riskiert den Gewinn automatisch
 
+var restart = false; // Neustart Scheibe 1
 var test = false; // Für Funktiontest
 var win = false; // Zufallsvariable, bestimmt ob risiko erfolgreich
 var riskiert = false; // true wenn Risikotaste während Risikophase gedrückt wurde
@@ -65,28 +73,20 @@ var risikophase = false;
 var spiel_laueft_noch = false; // ist praktisch während des ganzen Spiels true, geht nur unmittelbar
 // vor start des nächsten Spiels kurz auf false, verhindert Mehrfachstarts
 var teilgewinn_angenommen = false; // entprellt und verzoegert das Herunterteilen
-var mtg; // mit Teilgewinn
 var gewinn_angenommen = false; // verhintert das mehrfache Annehmen eines Gewinnes
 var hoechststufe = false; // Bei Höchstgewinn bleibt Gerät trotz Automatikstart stehen bis START gedrückt wird
 //  steuert Animation und Sound bei Gewinn von 90 und 100 Sonderspielen
 var ausspielung = false; // dient zum stoppen von allen Ausspielungen
 var ga = false; // true bei grossen Ausspielungen, wird benotigt wegen Ausspielreihenfolge arf 
-var gf = false; // gestreiftes Feld auf mittlerer Scheibe,  kein sonstiger Gewinn, nur in Sonderspielen relevant
+var gf = 0; // gestreiftes Feld auf mittlerer Scheibe, nur in Sonderspielen relevant
 var sonderspiel = false;
 var in_ss_gewonnen = false;
 
 var counter = 0; // wird fur die Risikoautomatik und automatische Gewinnannahme verwendet
 var ns = 0; // Null Selektor in Risikophase (rechte oder linke Null)
-var pu_ang = 0;
-var pu_neu = 0;
-var pu_hoch = 0; // wird fürs hochzählen der Punkte benötigt
-var intP_hoch; // Interval wird fürs hochzählen der Punkte benötigt
 
-
-var ss_ang = 0;
-var ss_neu = 0;
-var ss_hoch = 0; // wird fürs hochzählen der Sonderspiele benötigt
-var intS_hoch; // wird fürs hochzählen der Sonderspiele benötigt
+var hoch = 0; //zum hochzaehlen
+var int_hoch; // bei Gewinnannahme
 
 var lo = true; // fur Lichtanimation bei Hoechststufe
 var ani = true; // fur Lichtanimation bei Sonderspielen
@@ -99,8 +99,8 @@ var intH; // Interval fur Lichtanimation bei Hoechststufe
 // games oder points
 var game_mode = "games";
 var games = true; 
-// green, blue, gray 
-var color_theme = "black";
+// green, blue, black
+var color_theme = "green";
 
 var risiko_win = 50; // Prozent für Gewinn bei Risiko, default 50 (Risiko 1:1)
 // dieser Wert kann nach eigenem Geschmack verändert werden
@@ -118,8 +118,9 @@ var btn_rot_an = "#FF0000"; // Farbe der roten Button aktiv
 var btn_gelb_aus = "#997A00"; // Farbe der gelben Risiko-Buttons passiv
 var btn_gelb_auto = "#CCA300"; // Farbe der gelben Button bei Automatik
 var btn_gelb_an = "#FFCC00"; // Farbe der gelben Risiko-Buttons aktiv
-// Alternative Farben
-// 
+var rot = "#FF0000";
+var gelb = "#FFCC00";
+
 // Für die Farbschemen
 var bg_gruen = "#003322";
 var bg_blau = "#002233";
@@ -137,24 +138,12 @@ function id(id) {
 	return document.getElementById(id);
 }
 
-function bgImg(n, i) {
-	return id("feld" + n).style.backgroundImage = "url(" + Risiko[i].src + ")";
-}
-
 function hide(hid) {
 	id(hid).style.visibility = "hidden";
 }
 
 function show(sid) {
 	id(sid).style.visibility = "visible";
-}
-
-function button_text(bid, btxt) {
-	id(bid).value = btxt;
-}
-
-function button_color(bid, bcolor) {
-	id(bid).style.backgroundColor = bcolor;
 }
 
 function setColor(sid, scolor) {
@@ -165,80 +154,93 @@ function setBgColor(sid, scolor) {
 	id(sid).style.backgroundColor = scolor;
 }
 
+function setBgImg(n, i) {
+	return id("feld" + n).style.backgroundImage = "url(" + Risiko[i].src + ")";
+}
+
+function setButton(bid, bcolor, btext) {
+	if (bcolor != 0) {
+	    id(bid).style.backgroundColor = bcolor;
+	}
+	if (arguments.length == 3) {
+		id(bid).value = btext;
+    }
+}
+
 function setInfo(txt) {
 	id("Info").innerHTML = txt;
 }
 
-function setPF(pid, ptxt) {
+function setText(pid, ptxt) {
 	id(pid).innerHTML = ptxt;
 }
 
 // Multi-Language
 function setPfText() {
 	
-	//setPF("L_Geraet", plfText[0]);
-	//setPF("L_Typ", plfText[1]);
-	setPF("L_Geld", plfText[2]);
-	setPF("L_Punkte", plfText[3]);
-	setPF("L_Spiele", plfText[4]);
-	setPF("L_Gewinn", plfText[5]);
-	setPF("L_Einsatz", plfText[6]);
-	setPF("L_GAL", plfText[8]);
-	setPF("L_GAR", plfText[8]);
-	setPF("L_KAL", plfText[8]);
-	setPF("L_KAR", plfText[8]);
+	//setText("L_Geraet", plfText[0]);
+	//setText("L_Typ", plfText[1]);
+	setText("L_Geld", plfText[2]);
+	setText("L_Punkte", plfText[3]);
+	setText("L_Spiele", plfText[4]);
+	setText("L_Gewinn", plfText[5]);
+	setText("L_Einsatz", plfText[6]);
+	setText("L_GAL", plfText[8]);
+	setText("L_GAR", plfText[8]);
+	setText("L_KAL", plfText[8]);
+	setText("L_KAR", plfText[8]);
 }
 
 // Multi-Language
 function setCfgText() {
 
-	setPF("c1a", cfgText[0]);
-	setPF("c1b", cfgText[0]);
-	setPF("c1c", cfgText[0]);
-	setPF("c1d", cfgText[0]);
-	setPF("c2a", cfgText[1]);
-	setPF("c2b", cfgText[1]);
-	setPF("c2c", cfgText[1]);
-	setPF("c2d", cfgText[1]);
-	setPF("c3a", cfgText[2]);
-	setPF("c3b", cfgText[2]);
-	setPF("c3c", cfgText[2]);
-	setPF("c3d", cfgText[2]);
-	setPF("c4a", cfgText[3]);
-	setPF("c4b", cfgText[3]);
-	setPF("c4c", cfgText[3]);
-	setPF("c4d", cfgText[3]);
-	setPF("game_mode", cfgText[4]);
-	setPF("color_theme", cfgText[5]);
-	setPF("winning", cfgText[6]);
-	setPF("speed", cfgText[7]);
-	setPF("r_auto", cfgText[8]);
-	setPF("t_auto", cfgText[9]);
-	setPF("c_instr", c_instr);
-	setPF("c_hint", c_hint);
-	setPF("c_think", c_think);
-	setPF("c_github", c_github);
+	setText("c1a", cfgText[0]);
+	setText("c1b", cfgText[0]);
+	setText("c1c", cfgText[0]);
+	setText("c1d", cfgText[0]);
+	setText("c2a", cfgText[1]);
+	setText("c2b", cfgText[1]);
+	setText("c2c", cfgText[1]);
+	setText("c2d", cfgText[1]);
+	setText("c3a", cfgText[2]);
+	setText("c3b", cfgText[2]);
+	setText("c3c", cfgText[2]);
+	setText("c3d", cfgText[2]);
+	setText("c4a", cfgText[3]);
+	setText("c4b", cfgText[3]);
+	setText("c4c", cfgText[3]);
+	setText("c4d", cfgText[3]);
+	setText("game_mode", cfgText[4]);
+	setText("color_theme", cfgText[5]);
+	setText("winning", cfgText[6]);
+	setText("speed", cfgText[7]);
+	setText("r_auto", cfgText[8]);
+	setText("t_auto", cfgText[9]);
+	setText("c_instr", c_instr);
+	setText("c_hint", c_hint);
+	setText("c_think", c_think);
+	setText("c_github", c_github);
 }
 
 // Multi-Language
 function setBtnText() {
 	
-	button_text("start_button", btnText[0]);
-	button_text("mitte_button", btnText[1]);
-	button_text("stop_button", btnText[2]);
-	button_text("risiko_button1", btnText[3]);
-	button_text("risiko_button2", btnText[3]);
-	button_text("geldeinwurf", btnText[6]);
-	button_text("cfg_button", btnText[7]);
-	button_text("exit1", btnText[8]);
-	button_text("exit2", btnText[8]);
-	button_text("exit3", btnText[8]);
-	button_text("exit4", btnText[8]);
-	button_text("mode_games", btnText[9]);
-	button_text("mode_points", btnText[10]);
-	button_text("theme_green", btnText[11]);
-	button_text("theme_blue", btnText[12]);
-    button_text("theme_black", btnText[13]); // petrol
+	setButton("start", 0, btnText[0]);
+	setButton("mitte", 0, btnText[1]);
+	setButton("stop", 0, btnText[2]);
+	setButton("risiko1", 0, btnText[3]);
+	setButton("risiko2", 0, btnText[3]);
+	setButton("geldeinwurf", 0, btnText[6]);
+	setButton("cfg_button", 0, btnText[7]);
+	setButton("exit1", 0, btnText[8]);
+	setButton("exit2", 0, btnText[8]);
+	setButton("exit3", 0, btnText[8]);
+	setButton("exit4", 0, btnText[8]);
+	setButton("mode_games", 0, btnText[9]);
+	setButton("mode_points", 0, btnText[10]);
+	setButton("theme_green", 0, btnText[11]);
+	setButton("theme_blue", 0, btnText[12]);
+    setButton("theme_black", 0, btnText[13]); // petrol
 	
 }
 
@@ -254,25 +256,25 @@ function change_game_mode(mode) {
 	var felder_points = ["0", "30", "60", "120", "240", "500", "1000", "2000", "4000", "9000", "0", "20", "40", "80", "160", "300", "600", "1200", "2500", "5000", "10000", "1000", "1200", "2000", "2500", "4000", "5000", "9000", "10000"];
 
 	if (games) {
-		// setPF("Typ", "Duomatic: Games");
+	    // setText("Typ", "Duomatic: Games");
 		show("L_Spiele");
 		show("Spiele");
-		button_color("mode_games", btn_gruen_an);
-		button_color("mode_points", btn_grau_aus);
+		setButton("mode_games", btn_gruen_an);
+		setButton("mode_points", btn_grau_aus);
 		for (var i = 0; i <= 28; i++) {
-			setPF("feld" + i, felder_games[i]);
+			setText("feld" + i, felder_games[i]);
 		}
 	}
 	else {
-		// setPF("Typ", "Duomatic: Points");
+		// setText("Typ", "Duomatic: Points");
+		ss = 0;
 		hide("L_Spiele");
 		hide("Spiele");
-		button_color("mode_points", btn_gruen_an);
-		button_color("mode_games", btn_grau_aus);
+		setButton("mode_points", btn_gruen_an);
+		setButton("mode_games", btn_grau_aus);
 		for (var i = 0; i <= 28; i++) {
-			setPF("feld" + i, felder_points[i]);
+			setText("feld" + i, felder_points[i]);
 		}
-
 	}
 }
 
@@ -284,22 +286,22 @@ function change_color_theme(theme) {
 
 	if (theme == "green") {
 		bg_color = bg_gruen;
-		button_color("theme_green", btn_gruen_an);
-		button_color("theme_blue", btn_grau_aus);
-		button_color("theme_black", btn_grau_aus);
+		setButton("theme_green", btn_gruen_an);
+		setButton("theme_blue", btn_grau_aus);
+		setButton("theme_black", btn_grau_aus);
 	}
 	if (theme == "blue") {
 		bg_color = bg_blau;
-		button_color("theme_green", btn_grau_aus);
-		button_color("theme_blue", btn_gruen_an);
-		button_color("theme_black", btn_grau_aus);
+		setButton("theme_green", btn_grau_aus);
+		setButton("theme_blue", btn_gruen_an);
+		setButton("theme_black", btn_grau_aus);
 		
 	}
 	if (theme == "black") {
 		bg_color = bg_black;
-		button_color("theme_green", btn_grau_aus);
-		button_color("theme_blue", btn_grau_aus);
-		button_color("theme_black", btn_gruen_an);
+		setButton("theme_green", btn_grau_aus);
+		setButton("theme_blue", btn_grau_aus);
+		setButton("theme_black", btn_gruen_an);
 	}
 
 		setBgColor("Geraet", bg_color);
@@ -307,7 +309,6 @@ function change_color_theme(theme) {
 		setBgColor("instruction",bg_color);
 		setBgColor("think", bg_color);
         setBgColor("about", bg_color);
-	
 }
 
 function saveSettings() {
@@ -323,7 +324,6 @@ function saveSettings() {
 		setInfo(infoText[0]);
 	}
 	else setInfo("Could not save settings");
-
 }
 
 function loadSettings() {
@@ -359,6 +359,7 @@ function loadSettings() {
 
 function zum_starten_auffordern() {
 	setInfo(infoText[3]);
+	setButton("start", btn_rot_an);
 }
 
 function zeige_Geld() {
@@ -384,12 +385,12 @@ function zeige_Einsatz() {
 function zeige_feld(nr, status) {
 
 	if (risikoautomatik && (nr == rsr || nr == rsl)) { // Bild mit grunem Balken 
-		if (status == 1) bgImg(nr, 3);
-		else bgImg(nr, 2);
+		if (status == 1) setBgImg(nr, 3);
+		else setBgImg(nr, 2);
 	}
 	else { // ohne grünen Balken
-		if (status == 1) bgImg(nr, 1);
-		else bgImg(nr, 0);
+		if (status == 1) setBgImg(nr, 1);
+		else setBgImg(nr, 0);
 	}
 }
 
@@ -403,18 +404,18 @@ function zeige_felder(von, bis, status) {
 
 function stop_ausp_ani() {
 	
-    setColor("L_KAL", "#FFCC00");
-	setColor("L_KAR", "#FFCC00");
-	setColor("L_GAL", "#FF0000");
-	setColor("L_GAR", "#FF0000");
+    setColor("L_KAL", gelb);
+	setColor("L_KAR", gelb);
+	setColor("L_GAL", rot);
+	setColor("L_GAR", rot);
 }
 
 function ani_ss() {
 
 	ani = (ani) ? false : true;
 
-	if (ani) setColor("L_Spiele", "#FF0000");
-	else setColor("L_Spiele", "#FFCC00");
+	if (ani) setColor("L_Spiele", rot);
+	else setColor("L_Spiele", gelb);
 }
 
 function lichtorgel() {
@@ -487,22 +488,22 @@ function funktionstest(nr) {
 function umbuchen_animieren2() {
 
 	id("Punkte").value = "> > " + String(punkte);
-	setTimeout("Geld_zu_Punkte()", 8 * spiel_tempo);
+	setTimeout("Geld_zu_Punkte();", 8 * spiel_tempo);
 }
 
 function umbuchen_animieren1() {
 
 	id("Punkte").value = "> >   " + String(punkte);
 	setInfo(infoText[2]);
-	setTimeout("umbuchen_animieren2()", 8 * spiel_tempo);
+	setTimeout("umbuchen_animieren2();", 8 * spiel_tempo);
 }
 
 function Geldeinwurf() {
 
 	geld = geld + 10;
 	zeige_Geld();
-	button_color("geldeinwurf", btn_gruen_aus);
-	setTimeout("umbuchen_animieren1()", 8 * spiel_tempo);
+	setButton("geldeinwurf", btn_gruen_aus);
+	setTimeout("umbuchen_animieren1();", 8 * spiel_tempo);
 }
 
 function zeige_Scheibe(i, position) {
@@ -514,42 +515,73 @@ function zeige_Scheibe(i, position) {
 	// position = 0 entspricht Scheibe löschen, leeres Bild
 }
 
+function restart_Scheibe_1() {
+	
+	if (!restart) {
+    	restart = true;
+        if (!autostart) {
+    	     setButton("mitte", btn_rot_aus);
+        }
+	
+    	clearTimeout(T1_disc3);
+    	zeige_Scheibe(0, 0);
+    	if(!test) s1 = zufallszahl(1, 12);
+   	 setTimeout("zeige_Scheibe(0, s1);", 7 * spiel_tempo);
+   setTimeout("setButton('stop', btn_rot_an);", 3 * spiel_tempo);
+   
+   	T2_disc3 = setTimeout("stop_Scheibe_3();", 20 * spiel_tempo);
+   }
+}
+
 function stop_Scheibe_1() {
 
 	if (s_stop == 1) {
-		s_stop++;
-		if(!test) s1 = zufallszahl(1, 12);
+		s_stop = 3;
+		if (!test) s1 = zufallszahl(1, 12);
 		zeige_Scheibe(0, s1);
+		
+		if (!autostart) {
+	         setButton("mitte", btn_rot_an, btnText[0]);
+		}
+		setButton("stop", btn_rot_aus);
+		setTimeout("setButton('stop', btn_rot_an);", 3 * spiel_tempo);
+		
+		T1_disc3 = setTimeout("stop_Scheibe_3();", 20 * spiel_tempo);
 
 		// Falls Autostart eingeschaltet und auf Scheibe1 keine Sonne
 		if (autostart && !(s1 == 1 || s1 == 5 || s1 == 9)) {
-			setTimeout("zeige_Scheibe(0, 0);", 7 * spiel_tempo);
-			if(!test) s1 = zufallszahl(1, 12);
-			setTimeout("zeige_Scheibe(0, s1);", 15 * spiel_tempo);
+		     setTimeout("restart_Scheibe_1();", 10 * spiel_tempo);
 		}
-		setTimeout("stop_Scheibe_3()", 10 * spiel_tempo);
 	}
 }
 
 function stop_Scheibe_2() {
 
-	if (s_stop == 3) {
-		s_stop++;
+	if (s_stop == 2) {
+		s_stop = 0;
 		if(!test) s2 = zufallszahl(1, 12);
 		zeige_Scheibe(2, s2);
-		button_color("stop_button", btn_rot_aus);
-		setTimeout("Gewinnermittlung();", 10 * spiel_tempo);
+		
+		setButton("stop", btn_rot_aus);
+		
+		setTimeout("Gewinnermittlung();", 20 * spiel_tempo);
 
 	}
 }
 
 function stop_Scheibe_3() {
 
-	if (s_stop == 2) {
-		s_stop++;
+	if (s_stop == 3) {
+		s_stop = 2;
 		if(!test) s3 = zufallszahl(1, 12);
 		zeige_Scheibe(3, s3);
-		setTimeout("stop_Scheibe_2()", 15 * spiel_tempo);
+		if (!autostart) {
+             setButton("mitte", btn_rot_aus, btnText[1]);
+       }
+		setButton("stop", btn_rot_aus);
+		setTimeout("setButton('stop', btn_rot_an);", 3 * spiel_tempo);
+		
+		T_disc2 = setTimeout("stop_Scheibe_2();", 15 * spiel_tempo);
 	}
 }
 
@@ -558,8 +590,10 @@ function Scheiben_loeschen() {
 	for (var i = 0; i <= 4; i++) {
 		id("scheibe" + i).src = Scheibe[i][0].src;
 	}
-	button_color("stop_button", btn_rot_an);
-	setTimeout("stop_Scheibe_1()", 15 * spiel_tempo);
+	    
+	setTimeout("setButton('stop', btn_rot_an);", 3 * spiel_tempo);
+	
+	T_disc1 = setTimeout("stop_Scheibe_1();", 15 * spiel_tempo);
 }
 
 function ausspiel_stop() {
@@ -590,19 +624,7 @@ function Geld_zu_Punkte() {
 
 	if (!spiel_laueft_noch) {
 		setTimeout("zum_starten_auffordern();", 3 * spiel_tempo);
-
-		setTimeout("button_color('start_button', btn_rot_an);", 3 * spiel_tempo);
 	}
-}
-
-
-function Hoechststufe_zurueck() {
-
-	hoechststufe = false;
-	clearInterval(intH);
-
-	audio_stop();
-
 }
 
 function risikotaste_gedrueckt() {
@@ -612,16 +634,16 @@ function risikotaste_gedrueckt() {
 			risikoautomatik = false;
 			zeige_feld(rsr, 0);
 			zeige_feld(rsl, 0);
-			button_color("risiko_button1", btn_gelb_aus);
-			button_color("risiko_button2", btn_gelb_aus);
+			setButton("risiko1", btn_gelb_aus);
+			setButton("risiko2", btn_gelb_aus);
 			setInfo(infoText[8]);
 		}
 		else {
 			risikoautomatik = true;
 			setze_risikostufe(5);
 			setze_risikostufe(15);
-			button_color("risiko_button1", btn_gelb_auto);
-			button_color("risiko_button2", btn_gelb_auto);
+			setButton("risiko1", btn_gelb_auto);
+			setButton("risiko2", btn_gelb_auto);
 			setInfo(infoText[9]);
 		}
 	}
@@ -659,40 +681,36 @@ function setze_risikostufe(rs) {
 function the_end() {
 
 	risikophase = false;
-	gf = false;
 	test = false;
 
 	audio_stop();
 
-	if (autostart) button_color("mitte_button", btn_rot_auto);
-	else button_color("mitte_button", btn_rot_aus);
-	button_text("mitte_button", btnText[1]);
+	if (autostart) setButton("mitte", btn_rot_auto);
+	else setButton("mitte", btn_rot_aus);
+	setButton("mitte", 0, btnText[1]);
 
-	button_color("stop_button", btn_rot_aus);
-	button_text("stop_button", btnText[2]);
+	setButton("stop", btn_rot_aus, btnText[2]);
 
 	if (risikoautomatik) {
-		button_color("risiko_button1", btn_gelb_auto);
-		button_color("risiko_button2", btn_gelb_auto);
+		setButton("risiko1", btn_gelb_auto);
+		setButton("risiko2", btn_gelb_auto);
 	}
 	else {
-		button_color("risiko_button1", btn_gelb_aus);
-		button_color("risiko_button2", btn_gelb_aus);
+		setButton("risiko1", btn_gelb_aus);
+		setButton("risiko2", btn_gelb_aus);
 	}
 
 	spiel_laueft_noch = false;
 
 	if (punkte < einsatz) {
-		button_color("geldeinwurf", btn_gruen_an);
+		setButton("geldeinwurf", btn_gruen_an);
 		setTimeout("setInfo(infoText[1]);", 10 * spiel_tempo);
 	}
 	else if (startautomatik && !hoechststufe) {
 		starte_Spiel();
 	}
-	else {
-		button_color("start_button", btn_rot_an);
-		zum_starten_auffordern();
-	}
+	else zum_starten_auffordern();
+
 }
 
 
@@ -730,7 +748,7 @@ function ausspiel_gs(gewinnstufe, prozentsatz) {
 
 function kleine_Ausspielung_links() {
 	
-	setColor("L_KAL", "#FF0000");
+	setColor("L_KAL", rot);
 	
 	gs = ausspiel_gs(11, 50, 12, 15, 13, 10, 14, 10, 15, 10, 16, 5);
 	animiere_ausspielung(11, 16, 11);
@@ -739,7 +757,7 @@ function kleine_Ausspielung_links() {
 
 function kleine_Ausspielung_rechts() {
 	
-	setColor("L_KAR", "#FF0000");
+	setColor("L_KAR", rot);
 	
 	gs = ausspiel_gs(1, 50, 2, 20, 3, 15, 4, 10, 5, 5);
 	animiere_ausspielung(1, 5, 1);
@@ -754,7 +772,7 @@ function grosse_Ausspielung_links() {
 
 	ga = true;
 	setInfo(infoText[21]);
-	setColor("L_GAL", "#FFCC00");
+	setColor("L_GAL", gelb);
 
 	gs = ausspiel_gs(15, 50, 16, 15, 17, 10, 18, 10, 19, 10, 20, 5);
 	animiere_ausspielung(15, 20, 15);
@@ -764,7 +782,7 @@ function grosse_Ausspielung_links() {
 function grosse_Ausspielung_rechts() {
 
 	ga = true;
-	setColor("L_GAR", "#FFCC00");
+	setColor("L_GAR", gelb);
 	setInfo(infoText[20]);
 
 	gs = ausspiel_gs(4, 50, 5, 15, 6, 10, 7, 10, 8, 10, 9, 5);
@@ -772,12 +790,11 @@ function grosse_Ausspielung_rechts() {
 	setTimeout("ausspiel_stop();", 40 * spiel_tempo);
 }
 
-// Ende Teil 1
 
 function Hoechststufe_erreicht() {
 
 	hoechststufe = true;
-	button_color("mitte_button", btn_rot_aus);
+	setButton("mitte", btn_rot_aus);
 	audio_play("hauptgewinn");
 
 	intH = setInterval(lichtorgel, 800);
@@ -792,12 +809,18 @@ function starte_Spiel() {
 	ss_neu = 0;
 	s_stop = 1;
 	
+	restart = false;
 	risikophase = false;
+	teilgewinn_angenommen = false;
 	gewinn_angenommen = false;
-	ausspielung = false;
+    ausspielung = false;
 	ga = false;
 	
 	spiel_tempo = id("spiel_tempo").value;
+	risiko_win = id("risiko_win").value;
+	auto_risiko = id("auto_risiko").value;
+	auto_annahme = id("auto_annahme").value;
+	
 	
 	if (punkte >= einsatz) {
 
@@ -809,23 +832,32 @@ function starte_Spiel() {
 		setInfo(" ");
 		audio_play("abbuchen");
 		
-		if (hoechststufe) Hoechststufe_zurueck();
+		if (hoechststufe) {
+			hoechststufe = false;
+        	clearInterval(intH);
+	    }
 
-		if (startautomatik) button_color("start_button", btn_rot_auto);
-		else button_color("start_button", btn_rot_aus);
+		if (startautomatik) setButton("start", btn_rot_auto);
+		else setButton("start", btn_rot_aus);
+		
+		if (autostart) {
+			setButton("mitte", btn_rot_auto);
+		}
+		else {
+			setButton("mitte", btn_rot_aus);
+		}
 
 		if (risikoautomatik) {
 			zeige_feld(rsr, 0);
 			zeige_feld(rsl, 0);
 		}
-		if (games) {
-			if (ss == 0) {
+		
+		if (ss == 0) {
 				in_ss_gewonnen = false;
 				sonderspiel = false;
-				if (intS) {
-					clearInterval(intS);
-					setColor("L_Spiele", "#FF0000");
-				}
+			    clearInterval(intS);
+				setColor("L_Spiele", rot);
+				
 			}
 
 			if (ss == 1 && in_ss_gewonnen == false) {
@@ -837,12 +869,12 @@ function starte_Spiel() {
 				ss = ss - 1
 				zeige_Spiele();
 			}
-		}
+		
 		setTimeout("Scheiben_loeschen()", spiel_tempo);
 	}
 	else {
 		setInfo(infoText[1]);
-		button_color("geldeinwurf", btn_gruen_an);
+		setButton("geldeinwurf", btn_gruen_an);
 	}
 }
 
@@ -851,12 +883,12 @@ function starttaste_gedrueckt() {
 	if (spiel_laueft_noch) {
 		if (startautomatik) {
 			startautomatik = false;
-			button_color("start_button", btn_rot_aus);
+			setButton("start", btn_rot_aus);
 			setInfo(infoText[4]);
 		}
 		else {
 			startautomatik = true;
-			button_color("start_button", btn_rot_auto);
+			setButton("start", btn_rot_auto);
 			setInfo(infoText[5]);
 		}
 	}
@@ -864,20 +896,23 @@ function starttaste_gedrueckt() {
 }
 
 function mittleretaste_gedrueckt() {
-
-	if (!risikophase) {
-		if (autostart) {
-			autostart = false;
-			button_color("mitte_button", btn_rot_aus);
-			setInfo(infoText[6]);
-		}
-		else {
-			autostart = true;
-			button_color("mitte_button", btn_rot_auto);
-			setInfo(infoText[7]);
-		}
+	
+	if (risikophase) {
+           Teilgewinn_annehmen();
+    }
+	else if (s_stop == 3 && !restart) {
+          restart_Scheibe_1(); 
+     }
+     else  if (autostart) {
+			          autostart = false;
+			          setButton("mitte", btn_rot_aus);
+			          setInfo(infoText[6]);
+     }
+	 else {
+			          autostart = true;
+			          setButton("mitte", btn_rot_auto);
+			          setInfo(infoText[7]);
 	}
-	else Teilgewinn_annehmen();
 }
 
 function stoptaste_gedrueckt() {
@@ -885,85 +920,100 @@ function stoptaste_gedrueckt() {
 	if (ausspielung) ausspiel_stop();
 	else if (risikophase || hoechststufe) Gewinn_annehmen();
 	else {
-		stop_Scheibe_2();
-		stop_Scheibe_3();
-		stop_Scheibe_1();
+		switch(s_stop) {
+			case 0: break;
+			case 1:  clearTimeout(T1_disc1); 
+                           stop_Scheibe_1();
+		                   break;
+		    case 2:  clearTimeout(T_disc2);
+                           stop_Scheibe_2();
+		                   break;
+		    case 3: clearTimeout(T1_disc3);clearTimeout(T2_disc3);
+                           stop_Scheibe_3();
+		                   break;
+		}
 	}
 }
 
-
-function pu_hochzaehlen() {
-
-	if (gewinn > pu_hoch) {
-		pu_hoch = pu_hoch + 10;
+function hochzaehlen(pu_ang, ss_ang, info) {
+	
+	if (pu_ang > hoch) {
+		hoch = hoch + 10;
 		punkte = punkte + 10;
 		zeige_Punkte();
 	}
-	else {
-		clearInterval(intP_hoch);
-		zeige_Gewinn();
-	    //zeige_feld(gs, 0);
-
-	    audio_play("angenommen");
-        setInfo(infoText[12] + gewinn + infoText[16]);
-        gewinn =  0;
-        if(!ausspielung) { setTimeout("the_end();", 20 * spiel_tempo);
-        }
-	}
-}
-
-function ss_hochzaehlen() {
-	if (ss_neu > ss_hoch) {
-		ss_hoch++;
+	else if (ss_ang > hoch) {
+		hoch++;
 		ss++;
 		zeige_Spiele();
 	}
 	else {
-		clearInterval(intS_hoch);
-		//zeige_feld(gs, 0);
-		audio_play("angenommen");
-        setInfo(infoText[12] + ss_neu + infoText[17]);
-        ss_neu = 0;
-        if (!ausspielung) {
-        setTimeout("the_end();", 20 * spiel_tempo);
+		clearInterval(int_hoch);
+		gewinn =  gewinn - pu_ang;
+        if (gewinn < 0) gewinn = 0;
+        ss_neu = ss_neu - ss_ang;
+        if (ss_neu < 0) ss_neu = 0;
+        zeige_Gewinn(); 
+        setInfo(info);
+        audio_play("angenommen");
+
+        if (teilgewinn_angenommen) {
+        	  zeige_feld(gs, 0);
+        	  gs = gs - 1;
+		      zeige_feld(gs, 1);
+setTimeout("Teilgewinn_freigeben();", 15 * spiel_tempo); 
+	         setTimeout("starte_risiko();", 20 * spiel_tempo); 
+        }
+        else if (gewinn_angenommen && !ausspielung) { setTimeout("the_end();", 20 * spiel_tempo);
         }
 	}
 }
 
 function Gewinn_annehmen() {
+	
+var steptime = 10;
+var info = " ";
 
 	if (!gewinn_angenommen && (gewinn > 0 || ss_neu > 0)) {
 		gewinn_angenommen = true;
-		button_color("stop_button", btn_rot_aus);
+		setButton("mitte", btn_rot_aus);
+        setButton("stop", btn_rot_aus);
 		
 		if (!hoechststufe) {
 			audio_stop();
 		}
-		 if (games && ss_neu > 0) {
-			if (ss_neu > 19) {
-		setInfo(infoText[12] + ss_neu + infoText[15]);
-		    }
-            //ss_annehmen
-           	if (ss == 0) {
+		 if (ss_neu > 0) {
+			  if (ss_neu > 19) {
+		            setInfo(infoText[12] + ss_neu + infoText[15]);
+		       }
+           	if (ss == 0 && !sonderspiel) {
 		            intS = setInterval(ani_ss, 800);
            	}
-               ss_hoch = 0
-               intS_hoch = setInterval(ss_hochzaehlen, spiel_tempo);
+           info = infoText[12] + ss_neu + infoText[17];
+           steptime = 100;
          }
 		 else if (gewinn > 0)  {
-            // pu_annehmen
-            if(gewinn > 1900) {
-		         setInfo(infoText[12] + gewinn + infoText[14]);
-		    }
-	        pu_hoch = 0;
-        	intP_hoch = setInterval(pu_hochzaehlen, 10);
+              if(gewinn > 1900) {
+		            setInfo(infoText[12] + gewinn + infoText[14]);
+		       }
+		  info = infoText[12] + gewinn + infoText[16];
+		  steptime = 10;
           }
+       hoch = 0;
+       int_hoch = setInterval(hochzaehlen, steptime, gewinn, ss_neu, info);
 	}
 }
 
-
+function Teilgewinn_freigeben() {
+	teilgewinn_angenommen = false;
+	setButton("mitte", btn_rot_an);
+}
+	
 function Teilgewinn_annehmen() {
-   var tg;
+	
+   var pu_tg = 0;
+   var ss_tg = 0;
+   var steptime = 10;
    
 	if (!teilgewinn_angenommen && !hoechststufe) {
 		
@@ -973,47 +1023,49 @@ function Teilgewinn_annehmen() {
 		else if (!gewinn_angenommen && ((1 < gs && gs < 9) || (11 < gs && gs < 20))) {
 			
 			teilgewinn_angenommen = true;
+			setButton("mitte", btn_rot_aus);
 			zeige_feld(gs + 1, 0);
 			zeige_feld(gs, 0);
+			
+			if(games && ((4 < gs && gs < 9) || (14 < gs && gs < 20))) {
+					
+           
+                     ss_neu =  gss[gs];
+		             ss_tg = ss_neu - gss[gs - 1];
 		
-			if(games) {
-			     if ((1 < gs && gs < 6) || (11 < gs && gs < 16)) {
-				
-				      if (gs == 5 || gs == 15) ss_neu = 0;
-				      gewinn = gpu_points[gs];
-     				 tg = gpu_points[gs] - gpu_points[gs - 1];
-                      gs = gs - 1;
-                      zeige_feld(gs, 1);
-				      gewinn = gewinn - tg;
-				      punkte = punkte + tg;
-				      setInfo(infoText[13] + tg + infoText[16]);
-			     }
-			     else if ((5 < gs && gs < 9) || (15 < gs && gs < 20)) {
-				     tg = gss[gs] - gss[gs - 1];
-				     gs = gs - 1;
-				
-                 	if (ss == 0) {
-		                intS = setInterval(ani_ss, 800);
-                 	}
-                     zeige_feld(gs, 1);
-                     ss_neu = ss_neu - tg;
-			         ss = ss + tg;
-			         setInfo(infoText[13] + tg + infoText[17]);
-                }
-			}
-			else {
-				gewinn = gpu_points[gs];
-				tg = gpu_points[gs] - gpu_points[gs - 1];
-				gs = gs - 1;
-			    zeige_feld(gs, 1);
-				gewinn = gewinn - tg;
-				punkte = punkte + tg;
-				setInfo(infoText[13] + tg + infoText[16]);
+		             // Sonderfälle: Teilen von 3 SS und 5 SS, ss_neu nach hochz. 0, // für Rundung ein paar Punkte gegeben
+		             if (gs == 5) {
+			              ss_neu = 0;
+                          ss_tg = 2;
+                          punkte = punkte + 40;
+                          zeige_Punkte();
+                     } 
+                     if (gs == 15 ) {
+                          ss_neu = 0;
+                          ss_tg = 1; 
+                          punkte = punkte + 40;
+                          zeige_Punkte();
+                     }
+                     if (ss == 0 && !sonderspiel) { 
+                         intS = setInterval(ani_ss, 800); 
+                     }
+   
+                          
+                     steptime = 100;
+			         info = infoText[13] + ss_tg + infoText[17];
+             }
+			else {  // points
+			
+			    gewinn = gpu_points[gs];
+				pu_tg = gewinn - gpu_points[gs - 1];
+			
+				steptime = 10;
+				info = infoText[13] + pu_tg + infoText[16];
 	       }
-           zeige_Punkte();
-           zeige_Spiele();                   
-           setTimeout("starte_risiko();", 20 * spiel_tempo); 
-          
+	
+	       hoch = 0;
+		   int_hoch = setInterval(hochzaehlen, steptime, pu_tg, ss_tg, info);
+		
 		}
 	}
 }
@@ -1026,10 +1078,6 @@ function starte_risiko() {
 
     zeige_feld(gs, 1);
 	audio_stop();
-
-	risiko_win = id("risiko_win").value;
-	auto_risiko = id("auto_risiko").value;
-	auto_annahme = id("auto_annahme").value;
 
 	if (games) {
 		gewinn = gpu_games[gs];
@@ -1047,23 +1095,23 @@ function starte_risiko() {
 
 	win = win_or_loose();
 
-	button_text("stop_button", btnText[5]);
+	setButton("stop", 0, btnText[5]);
 
 	if (gs == 9 || gs == 20) {
-		button_color("stop_button", btn_rot_an);
+		setButton("stop", btn_rot_an);
 		Hoechststufe_erreicht();
 	}
 	else if (((0 < gs && gs < 9) || (10 < gs && gs < 20)) && !gewinn_angenommen) {
 
-		button_color("risiko_button1", btn_gelb_an);
-		button_color("risiko_button2", btn_gelb_an);
-		button_text("mitte_button", btnText[4]);
-		button_color("stop_button", btn_rot_an);
+		setButton("risiko1", btn_gelb_an);
+		setButton("risiko2", btn_gelb_an);
+		setButton("mitte", 0, btnText[4]);
+		setButton("stop", btn_rot_an);
 
 		if ((1 < gs && gs < 9) || (11 < gs && gs < 20)) {
-			button_color("mitte_button", btn_rot_an);
+			setButton("mitte", btn_rot_an);
 		}
-		else button_color("mitte_button", btn_rot_aus);
+		else setButton("mitte", btn_rot_aus);
 		
 		animiere_risiko();
 	}
@@ -1102,13 +1150,6 @@ function animiere_risiko() {
 			if (win) {
 				gs = gs + 1;
 				audio_stop();
-				if (games) {
-					gewinn = gpu_games[gs];
-					ss_neu = gss[gs];
-				}
-				else {
-					gewinn = gpu_points[gs];
-				}
 				zeige_feld(ns, 0);
 				zeige_feld(gs, 1);
 			}
@@ -1116,9 +1157,8 @@ function animiere_risiko() {
 				zeige_feld(rfeld, 0);
 				zeige_feld(ns, 1);
 				gs = ns;
-				gewinn = 0;
-				ss_neu = 0;
-				button_color("stop_button", btn_rot_aus);
+			    setButton("mitte", btn_rot_aus);
+				setButton("stop", btn_rot_aus);
 			}
 	        setInfo(" ");
 		    starte_risiko();
@@ -1129,7 +1169,6 @@ function animiere_risiko() {
 		zeige_feld(ns, 0);
 		zeige_feld(rfeld, 0);
 		zeige_feld(gs, 1);
-		if (teilgewinn_angenommen)  teilgewinn_angenommen = false; 
 	}
 }
 
@@ -1137,8 +1176,7 @@ function animiere_ausspielung(von_, bis_, feld_) {
 	// Ausspielung , von Feld,
 	//  bis Feld,  startet bei Feld z.b. (5, 9, 5)
 
-	button_text("stop_button", btnText[2]);
-	button_color("stop_button", btn_rot_an);
+	setButton("stop", btn_rot_an, btnText[2]);
 
 	von = von_;
 	bis = bis_;
@@ -1172,12 +1210,11 @@ function animiere_ausspielung(von_, bis_, feld_) {
 			gewinn = gpu_points[gs];
 		}
 		zeige_Gewinn();
-		zeige_Spiele();
 		stop_ausp_ani();
 		audio_stop();
 		setInfo(" ");
 		setTimeout("zeige_feld(gs, 1);", 5 * spiel_tempo);
-		if (feld > 20) {
+		if (feld > 20) { // gam
 		setTimeout("zeige_feld(feld, 0);", 20 * spiel_tempo);
 		}
 		setTimeout("starte_risiko();", 20 * spiel_tempo);
@@ -1209,16 +1246,17 @@ function gewinn_in_ss() {
 	in_ss_gewonnen = true;
 	gewinn = 200;
 
-	if ((ss > 9 && (s2 != 1 || gf)) || ausspielung) {
+	if ((ss > 9 && (s2 != 1 || gf == 1)) || ausspielung) {
 		Gewinn_annehmen();
 	}
 	else if ((sonderspiel && ss < 10) || s2 == 1) {
-		gs = 14;
-		punkte = punkte + 40;
-		zeige_Punkte();
-		setInfo(infoText[13] + " 40" + infoText[16]);
-		zeige_feld(gs,1);
-		setTimeout("starte_risiko();", 10 * spiel_tempo);
+        punkte = punkte + 40;
+        gewinn = 160; 
+        gs = 14;
+	    zeige_feld(gs,1);
+	    setInfo(infoText[13] + "40" + infoText[16]);
+	   
+	    setTimeout("starte_risiko();", 20 * spiel_tempo);
 	}
 }
 
@@ -1249,8 +1287,7 @@ function einfacher_Gewinn(eg) {
 			
 	}
 
-	if (games) gewinn = gpu_games[gs];
-	else gewinn = gpu_points[gs];
+    gewinn = gpu_points[gs];
 
 	zeige_Gewinn();
 	zeige_feld(gs, 1);
@@ -1266,14 +1303,12 @@ function Gewinnermittlung() {
 	var sonne = 0;
 	var tmp = 0;
 	var ge = [];
-    gf = 0;
-	gs = 0;
-	gewinn = 0;
 
 	audio_stop();
 
 	// die ungeraden Felder sind gestreift (Gewinn in Sonderspielen)
-	if(s2 != 1)  gf = s2 % 2;
+	gf = 0;
+    if (s2 != 1) gf = s2 % 2;
 
 	for (i = 0; i <= 1; i++) {
 		for (j = 3; j <= 4; j++) {
@@ -1313,7 +1348,10 @@ function Gewinnermittlung() {
 				setTimeout("grosse_Ausspielung_rechts();", 30 * spiel_tempo);
 				break;
 			case 0:
-				if (games && sonderspiel) gewinn_in_ss();
+				if (games && sonderspiel) { 
+                     gs = 1; // nur so, bei jedem Gewinn soll gs > 0
+                     gewinn_in_ss();
+                }
 				else {
 					if (ge.length > 0 && ge[0] > 30) {
 						gs = 11; // vorlÃ¤ufig 
@@ -1344,12 +1382,13 @@ function Gewinnermittlung() {
 		}
 	}
 
-	if (gs == 0) {
-		if (games && sonderspiel && gf) gewinn_in_ss();
-		else setTimeout("the_end();", 20 * spiel_tempo);
-	}
-
+	           if (gs ==  0 &&  sonderspiel && gf == 1) {
+               gs = 1; // temp, gestreiftes Feld
+               gewinn_in_ss();
+           }
+           
+           if (gs == 0) setTimeout("the_end();", 20 * spiel_tempo);
+     
 }
-
 
 // ENDE
