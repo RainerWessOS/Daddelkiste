@@ -342,7 +342,7 @@
 									<tr>
 										<td rowspan=2 class="risikofeld tdh50" id="feld27">90 S</td>
 										<td rowspan=2><img src="images/GA.gif" width="80" height="40" alt=""></td>
-										<td rowspan=2 class="risikofeld" id="feld26">50 S</td>
+										<td rowspan=2 class="risikofeld" id="feld26" onclick="show('Funktionstest');">50 S</td>
 									</tr>
 									<tr>
 										<td rowspan=2 class="risikofeld" id="feld23">20 S</td>
@@ -566,19 +566,19 @@
 						<table id="Taster">
 							<tr>
 								<td class="zentriert">
-									<input value="RISK" class="risikobutton" onclick="risikotaste_gedrueckt();" type="button" ID="risiko1">
+									<input value="RISK" class="risikobutton" onclick="Risikotaste_gedrueckt();" type="button" ID="risiko1">
 								</td>
 								<td class="zentriert">
-									<input value="START" class="startstopbutton" onclick="starttaste_gedrueckt()" type="button" ID="start">
+									<input value="START" class="startstopbutton" onclick="Starttaste_gedrueckt()" type="button" ID="start">
 								</td>
 								<td class="zentriert">
-									<input value="Autostart" class="startstopbutton" onclick="mittleretaste_gedrueckt();" type="button" ID="mitte">
+									<input value="Autostart" class="startstopbutton" onclick="Mittetaste_gedrueckt();" type="button" ID="mitte">
 								</td>
 								<td class="zentriert">
-									<input value="STOP" class="startstopbutton" onclick="stoptaste_gedrueckt();" ID="stop" type="button">
+									<input value="STOP" class="startstopbutton" onclick="Stoptaste_gedrueckt();" ID="stop" type="button">
 								</td>
 								<td class="zentriert">
-									<input value="RISK" class="risikobutton" onclick="risikotaste_gedrueckt();" type="button" ID="risiko2">
+									<input value="RISK" class="risikobutton" onclick="Risikotaste_gedrueckt();" type="button" ID="risiko2">
 								</td>
 							</tr>
 						</table>
@@ -594,14 +594,14 @@
 			<p>&nbsp;<p>
 		
 		<form id="Funktionstest" class="zentriert">
-			<input value="kleine Ausspielung links" onclick="funktionstest(0);" type="button" class="test_button">
+			<input value="kleine Ausspielung links" onclick="Funktionstest(0);" type="button" class="test_button">
 				&nbsp;
-			<input value="GA links" onclick="funktionstest(2);" type="button" class="test_button">
+			<input value="GA links" onclick="Funktionstest(2);" type="button" class="test_button">
 				&nbsp;
-			<input value="GA mitte" onclick="funktionstest(4);" type="button" class="test_button"> &nbsp;
-			<input value="GA rechts" onclick="funktionstest(3);" type="button" class="test_button">
+			<input value="GA mitte" onclick="Funktionstest(4);" type="button" class="test_button"> &nbsp;
+			<input value="GA rechts" onclick="Funktionstest(3);" type="button" class="test_button">
 				&nbsp;
-			<input value="kleine Ausspielung rechts" onclick="funktionstest(1);" type="button" class="test_button">
+			<input value="kleine Ausspielung rechts" onclick="Funktionstest(1);" type="button" class="test_button">
 		</form>
 		</center>
 
