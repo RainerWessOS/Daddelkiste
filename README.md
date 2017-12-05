@@ -12,7 +12,7 @@ Now with multi-language support for: de, en, fr, es, pt, it, nl, sv. The game st
 
 Screenshots:
 
-<img src="https://github.com/RainerWessOS/Daddelkiste/blob/master/Daddelkiste_Duomatic.png" />
+<img src="https://github.com/RainerWessOS/Daddelkiste/blob/master/Daddelkiste_Duomatic_DE.png" />
 
 
 Copyright (C) 2017 Rainer Wess, Osnabrück, Germany
