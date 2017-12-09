@@ -1,11 +1,12 @@
 
-//*******************************************************************
-//      Daddelkiste Duomatic Version 0.94 
-//      Javascript implementation of a penny arcade casino game
-//
-//      2017 Copyright (C) Rainer Wess, Osnabrück, Germany
-//      Open Source / Freeware - released under GPL 2.0
-//*******************************************************************
+/*
+*      Daddelkiste Duomatic Version 0.94
+*      Javascript implementation of an "Advanced Slot Machine"
+*
+*      Copyright  2017 Rainer Wess, Osnabrück, Germany
+*      Open Source / Freeware - released under GPL 2
+*/
+
 
 var geld = 0;
 var punkte = 0;
@@ -261,7 +262,7 @@ function change_game_mode(mode) {
 		show("Spiele");
 		setButton("mode_games", btn_gruen_an);
 		setButton("mode_points", btn_grau_aus);
-		for (var i = 0; i <= 28; i++) {
+		for (let i = 0; i <= 28; i++) {
 			setText("feld" + i, felder_games[i]);
 		}
 	}
@@ -272,7 +273,7 @@ function change_game_mode(mode) {
 		hide("Spiele");
 		setButton("mode_points", btn_gruen_an);
 		setButton("mode_games", btn_grau_aus);
-		for (var i = 0; i <= 28; i++) {
+		for (let i = 0; i <= 28; i++) {
 			setText("feld" + i, felder_points[i]);
 		}
 	}
@@ -396,7 +397,7 @@ function zeige_Feld(nr, status) {
 function zeige_Felder(von, bis, status) {
 	// z.B (0,9,0) schaltet die Felder (von 0, bis 9, aus 0)
 
-	for (i = von; i <= bis; i++) {
+	for (var i = von; i <= bis; i++) {
 		zeige_Feld(i, status);
 	}
 }
@@ -421,7 +422,7 @@ function Lichtorgel() {
 
 	lo = (lo) ? false : true;
 
-	for (i = 0; i <= 20; i++) {
+	for (var i = 0; i <= 20; i++) {
 		if (lo) {
 			(i % 2 == 0) ? zeige_Feld(i, 1): zeige_Feld(i, 0);
 		}
@@ -731,17 +732,17 @@ function ausspiel_gs(gewinnstufe, prozentsatz) {
 	ausspielung = true;
 	audio_play("ausspielung");
 
-	for (i = 0; i < arguments.length; i++) {
+	for (let i = 0; i < arguments.length; i++) {
 		(i % 2 == 0) ? gw.push(arguments[i]): pw.push(arguments[i]);
 	}
 
-	for (var i = 0; i < pw.length; i++) {
-		b = a + pw[i];
+	for (var j = 0; j < pw.length; j++) {
+		b = a + pw[j];
 		if ((a < z) && (z <= b)) break;
 		a = b;
 	}
 
-	return gw[i]; // gs
+	return gw[j]; // gs
 
 }
 
@@ -1296,8 +1297,6 @@ function einfacher_Gewinn(eg) {
 
 function Gewinnermittlung() {
 
-	var i;
-	var j;
 	var k = 0;
 	var sonne = 0;
 	var tmp = 0;
@@ -1309,11 +1308,11 @@ function Gewinnermittlung() {
 	gf = 0;
     if (s2 != 1) gf = s2 % 2;
 
-	for (i = 0; i <= 1; i++) {
-		for (j = 3; j <= 4; j++) {
+	for (let i = 0; i <= 1; i++) {
+		for (let j = 3; j <= 4; j++) {
 			if (disc[i][s1] == disc[j][s3]) {
 				ge[k] = disc[i][s1];
-				if (ge[k] == 999) sonne++;
+				if (ge[k] == 999) sonne++; 
 				k++;
 			}
 		}
@@ -1372,7 +1371,7 @@ function Gewinnermittlung() {
 	}
 
 	if (ge.length > 0 && disc[2][s2] != 999) {
-		for (i = 0; i < ge.length; i++) {
+		for (let i = 0; i < ge.length; i++) {
 			if (ge[i] == disc[2][s2]) {
 				gs = 11; // vorläufig
 				if (games && sonderspiel) gewinn_in_ss();

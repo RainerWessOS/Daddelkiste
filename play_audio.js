@@ -1,10 +1,11 @@
-//*********************************************************************
-//      Daddelkiste Disco Duomatic Version 0.94
-//      Javascript implementation of a penny arcade casino game
-//
-//      2017 Copyright (C) Rainer Wess, Osnabrück, Germany
-//      Open Source / Freeware - released under GPL 2.0
-//*********************************************************************
+
+/*
+*      Daddelkiste Duomatic Version 0.94
+*      Javascript implementation of an "Advanced Slot Machine"
+*
+*      Copyright  2017 Rainer Wess, Osnabrück, Germany
+*      Open Source / Freeware - released under GPL 2.0
+*/
 
 // create new audio object and load the audio file
 var audioSprite = new Audio();
@@ -73,3 +74,6 @@ var audio_play = function(id) {
 var audio_stop = function() {
     	audioSprite.pause();
 };
+
+// ENDE
+

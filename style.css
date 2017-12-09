@@ -1,4 +1,4 @@
-/* Stylesheet for Daddelkiste Duomatic - Version 0.93 */
+/* Stylesheet for Daddelkiste Duomatic - Version 0.94 */
 
 body {
   margin: 0px;
@@ -9,6 +9,13 @@ body {
   align: center;
   color: white;
   background-color: black;
+  
+  /* for disabling text selection */
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
 }
 
 img {

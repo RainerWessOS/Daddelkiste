@@ -1,16 +1,19 @@
-//*******************************************************************
-//      Daddelkiste Duomatic Version 0.94 
-//      JavaScript implementation of a penny arcade casino game
-//
-//      2017 Copyright (C) Rainer Wess, Osnabrück, Germany
-//      Open Source / Freeware - released under GPL 2.0
-//*******************************************************************
 
-// Localisation for Dattelkiste Duomatic - Version 0.94
+/*
+*      Daddelkiste Duomatic Version 0.94
+*      Javascript implementation of an "Advanced Slot Machine"
+*
+*      Copyright  2017 Rainer Wess, Osnabrück, Germany
+*      Open Source / Freeware - released under GPL 2.0
+*/
 
-// Supported Languages: 
-// de, en, fr, it, nl, es , pt , sv
-// default: en
+/*
+* Localisation for Dattelkiste Duomatic - Version 0.94
+*
+* Supported Languages: 
+* de, en, fr, it, nl, es , pt , sv
+* default: en
+*/
 
  // Zum Testen:
  // var lang = "it";
@@ -702,4 +705,4 @@ c_hint = "Daddelkiste is no longer being developed by me. If you like, you can c
 
 }
 
-// END
+// ENDE

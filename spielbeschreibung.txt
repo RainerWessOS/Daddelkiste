@@ -1,3 +1,4 @@
+
 Daddelkiste Duomatic
 
 Spielbeschreibung
@@ -25,3 +26,4 @@ Nur für die Spielart mit Sonderspielen gilt zusätzlich folgendes:
 Im Sonderspiel werden bei Gewinnkombination und bei  gestreiften Feldern auf der mittleren Scheibe 200 Punkte gewonnen. In Sonderspielen kann nur bei Sonne auf der mittleren Scheibe, oder bei bei einem Sonderspielzählerstand kleiner als 10 riskiert werden, wobei 40 Punkte gleich angenommen und der Rest zum Risiko angeboten wird.  Es können unbegrenzt viele Sonderspiele gewonnen werden. Wird bei Ablauf von Sonderspielen kein Gewinn erzielt, bleibt der Sonderspielzähler auf 1, bis  gewonnen wird.
 
 Allle Ereignisse werden auch klanglich untermalt. Bei erreichen der Höchststufe auf der jeweiligen Risikoleiter, also bei 90 oder 100 Sonderspielen, wird eine  Lichtanimation gestartet und der Radetzky-Marsch gespielt.
+

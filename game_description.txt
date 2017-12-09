@@ -1,3 +1,4 @@
+
 Daddelkiste Duomatic
 
 Game Description 
@@ -9,3 +10,4 @@ All wins can be risked. Wins above the minimum field of the respective risk ladd
 It can be turned on a risk automatic, which risks any wins. The amount up to which you want to automatically risk is freely adjustable by tapping or clicking on the corresponding field on the risk ladder while the risk automatic is activated.
 
 In the special game, 200 points are won, with 40 taken immediately and the rest offered for risk. If there was no win at the end of the special games, the special game counter remains at 1 until won.
+
