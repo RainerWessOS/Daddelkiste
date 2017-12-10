@@ -16,8 +16,7 @@
 */
 
  // Zum Testen:
- // var lang = "it";
- // lang = lang.substring(0,2);
+ // var lang = "en";
     
  var lang = navigator.language.substring(0,2);
 
