@@ -42,6 +42,14 @@ var gss = [0, 0, 0, 0, 0, 5, 10, 20, 40, 90, 0, 0, 0, 0, 0, 3, 6, 12, 25, 50, 10
 var gam = 0; // Gewinn-Feldnummer bei der großen Ausspielung mitte (Felder 21-28)
 // Ausspielreihenfolge GA rechts(4-9)/links(15-20)/mitte(21-28)
 var arf = [0, 0, 0, 0, 4, 8, 6, 9, 5, 7, 0, 0, 0, 0, 0, 15, 19, 17, 20, 16, 18, 21, 26, 23, 28, 24, 27, 22, 25];
+
+var info;  // Text im Info-Feld
+var rfeld; // Risikofeld
+var feld; // für Ausspielungen
+var von; // für Ausspielungen
+var bis; // für Ausspielungen
+var next; // für Ausspielungen
+
 var gs = 0; // Gewinnstufe, Kern der Risikofunktion, 0-9 fur rechts, 10-20 links
 var rsr = 5; // Risikostufe rechts, default Wert, bis zum Erreichen von 5 SS / 500 P.
 var rsl = 15; // Risikostufe links, default Wert, bis zum Erreichen von 3 SS / 300
@@ -73,6 +81,7 @@ var hoch = 0; //zum hochzaehlen
 var int_hoch; // bei Gewinnannahme
 var lo = true; // fur Lichtanimation bei Hoechststufe
 var ani = true; // fur Lichtanimation bei Sonderspielen
+var intRisiko; //Interval für Risikoanimation
 var intS; // fur Lichtanimation bei Sonderspielen
 var intH; // Interval fur Lichtanimation bei Hoechststufe
 // ************************
@@ -585,22 +594,26 @@ function setze_Risikostufe(rs) {
 	}
 }
 
+function aktualisiere_Gewinn() {
+
+if (games) {
+		gewinn = gpu_games[gs];
+		ss_neu = gss[gs];
+	}
+	else {
+		gewinn = gpu_points[gs];
+	}
+	zeige_Gewinn();
+}
+
 function zum_Ende() {
-	risikophase = false;
 	test = false;
 	audio_stop();
 	if (autostart) setButton("mitte", btn_rot_auto);
 	else setButton("mitte", btn_rot_aus);
 	setButton("mitte", 0, btnText[1]);
 	setButton("stop", btn_rot_aus, btnText[2]);
-	if (risikoautomatik) {
-		setButton("risiko1", btn_gelb_auto);
-		setButton("risiko2", btn_gelb_auto);
-	}
-	else {
-		setButton("risiko1", btn_gelb_aus);
-		setButton("risiko2", btn_gelb_aus);
-	}
+	
 	spiel_laueft_noch = false;
 	if (punkte < einsatz) {
 		setButton("geldeinwurf", btn_gruen_an);
@@ -674,7 +687,6 @@ function grosse_Ausspielung_rechts() {
 
 function Hoechststufe_erreicht() {
 	hoechststufe = true;
-	setButton("mitte", btn_rot_aus);
 	audio_play("hauptgewinn");
 	intH = setInterval(Lichtorgel, 800);
 	setTimeout(Gewinn_annehmen, 8 * spiel_tempo);
@@ -779,7 +791,7 @@ function Mittetaste_gedrueckt() {
 
 function Stoptaste_gedrueckt() {
 	if (ausspielung) ausspiel_stop();
-	else if (risikophase || hoechststufe) Gewinn_annehmen();
+	else if (risikophase) Gewinn_annehmen();
 	else {
 		switch (s_stop) {
 			case 0:
@@ -825,25 +837,24 @@ function hochzaehlen(pu_ang, ss_ang, info) {
 			zeige_Feld(gs, 0);
 			gs = gs - 1;
 			zeige_Feld(gs, 1);
-			setTimeout(Teilgewinn_freigeben, 15 * spiel_tempo);
+			setTimeout(Teilgewinn_freigeben, 10 * spiel_tempo);
 			setTimeout(starte_Risiko, 20 * spiel_tempo);
 		}
 		else if (gewinn_angenommen && !ausspielung) {
-			setTimeout(zum_Ende, 20 * spiel_tempo);
+			setTimeout(zum_Ende, 15 * spiel_tempo);
 		}
 	}
 }
 
 function Gewinn_annehmen() {
+	
 	var steptime = 10;
 	var info = " ";
+	
 	if (!gewinn_angenommen && (gewinn > 0 || ss_neu > 0)) {
 		gewinn_angenommen = true;
-		setButton("mitte", btn_rot_aus);
-		setButton("stop", btn_rot_aus);
-		if (!hoechststufe) {
-			audio_stop();
-		}
+		if (risikophase) stop_Risiko();
+		if (!hoechststufe) audio_stop();
 		if (ss_neu > 0) {
 			if (ss_neu > 19) {
 				setInfo(infoText[12] + ss_neu + infoText[15]);
@@ -881,9 +892,8 @@ function Teilgewinn_annehmen() {
 		}
 		else if (!gewinn_angenommen && ((1 < gs && gs < 9) || (11 < gs && gs < 20))) {
 			teilgewinn_angenommen = true;
-			setButton("mitte", btn_rot_aus);
+			if (risikophase) stop_Risiko();
 			zeige_Feld(gs + 1, 0);
-			zeige_Feld(gs, 0);
 			if (games && ((4 < gs && gs < 9) || (14 < gs && gs < 20))) {
 				ss_neu = gss[gs];
 				ss_tg = ss_neu - gss[gs - 1];
@@ -918,129 +928,142 @@ function Teilgewinn_annehmen() {
 	}
 }
 
+function stop_Risiko() {
+	
+audio_stop();
+risikophase = false;
+clearInterval(intRisiko);
+
+zeige_Feld(rfeld, 0); 
+if (gs !== ns) zeige_Feld(ns, 0);
+zeige_Feld(gs, 1);
+
+if(risikoautomatik) {
+   setButton("risiko1", btn_gelb_auto);
+   setButton("risiko2", btn_gelb_auto);
+}
+else {
+   setButton("risiko1", btn_gelb_aus);
+   setButton("risiko2", btn_gelb_aus);
+}
+
+setButton("mitte", btn_rot_aus);
+setButton("stop", btn_rot_aus);
+	
+}
+
 function starte_Risiko() {
+	
+	audio_stop();
+	aktualisiere_Gewinn();
 	risikophase = true;
 	riskiert = false;
 	counter = 0;
-	zeige_Feld(gs, 1);
-	audio_stop();
-	if (games) {
-		gewinn = gpu_games[gs];
-		ss_neu = gss[gs];
-	}
-	else {
-		gewinn = gpu_points[gs];
-	}
-	zeige_Gewinn();
-	if (gs == 0 || gs == 10) {
-		setTimeout(zum_Ende, 20 * spiel_tempo);
-	}
-	win = win_or_loose();
-	setButton("stop", 0, btnText[5]);
-	if (gs == 9 || gs == 20) {
-		setButton("stop", btn_rot_an);
-		Hoechststufe_erreicht();
-	}
-	else if (((0 < gs && gs < 9) || (10 < gs && gs < 20)) && !gewinn_angenommen) {
-		setButton("risiko1", btn_gelb_an);
-		setButton("risiko2", btn_gelb_an);
-		setButton("mitte", 0, btnText[4]);
-		setButton("stop", btn_rot_an);
-		if ((1 < gs && gs < 9) || (11 < gs && gs < 20)) {
-			setButton("mitte", btn_rot_an);
-		}
-		else setButton("mitte", btn_rot_aus);
-		animiere_Risiko();
-	}
+	
+	setButton("risiko1", btn_gelb_an);
+	setButton("risiko2", btn_gelb_an);
+	setButton("mitte", 0, btnText[4]);
+	setButton("stop", btn_rot_an, btnText[5]);
+		
+	intRisiko  = setInterval(animiere_Risiko, 500);
+	
 }
 
 function animiere_Risiko() {
+
+	audio_stop();
+	win = win_or_loose();
+	
 	rfeld = gs + 1;
 	ns = (gs > 10) ? 10 : 0;
-	audio_stop();
-	if (!gewinn_angenommen && !teilgewinn_angenommen) {
-		zeige_Feld(gs, 0);
-		if (counter % 2 == 0) {
-			zeige_Feld(rfeld, 1);
-			zeige_Feld(ns, 0);
-			audio_play("risiko2");
-		}
-		else {
-			zeige_Feld(rfeld, 0);
-			zeige_Feld(ns, 1);
-			audio_play("risiko1");
-		}
-		// automatische Gewinnannahme
-		counter = counter + 1;
-		if (counter > (2 * auto_annahme)) Gewinn_annehmen();
-		// Risikoautomatik
-		if (counter > (2 * auto_risiko) && risikoautomatik && (gs < rsr || (10 < gs && gs < rsl))) {
-			risiko_auto();
-		}
-		if (riskiert) {
-			if (win) {
-				gs = gs + 1;
-				audio_stop();
-				zeige_Feld(ns, 0);
-				zeige_Feld(gs, 1);
-			}
-			else {
-				zeige_Feld(rfeld, 0);
-				zeige_Feld(ns, 1);
-				gs = ns;
-				setButton("mitte", btn_rot_aus);
-				setButton("stop", btn_rot_aus);
-			}
-			setInfo(" ");
-			starte_Risiko();
-		}
-		else setTimeout(animiere_Risiko, 500);
+	zeige_Feld(gs, 0);
+	
+	if ( counter % 2 == 0 ) {
+		zeige_Feld(rfeld, 1);
+	    zeige_Feld(ns, 0);
+		audio_play("risiko2");
 	}
 	else {
-		zeige_Feld(ns, 0);
 		zeige_Feld(rfeld, 0);
-		zeige_Feld(gs, 1);
+		zeige_Feld(ns, 1);
+		audio_play("risiko1");
+	}
+	
+	if ((1 < gs && gs < 9) || (11 < gs && gs < 20)) {
+			setButton("mitte", btn_rot_an);
+	}
+	else setButton("mitte", btn_rot_aus);
+		
+		// automatische Gewinnannahme
+	counter = counter + 1;
+	if (counter > (2 * auto_annahme)) Gewinn_annehmen();
+		// Risikoautomatik
+	if (counter > (2 * auto_risiko) && risikoautomatik && (gs < rsr || (10 < gs && gs < rsl))) {
+		risiko_auto();
+	}
+	
+	if (riskiert) {
+		  if (win) {
+				gs = gs + 1;
+	            if (gs == 9 || gs == 20) {
+	               stop_Risiko();
+		           Hoechststufe_erreicht();
+	            }
+			}
+			else {
+				gs = ns;
+				stop_Risiko();
+				setTimeout(zum_Ende, 15 * spiel_tempo);
+			}
+			aktualisiere_Gewinn();
+			setInfo(" ");
+			counter = 0;
+			riskiert = false;
 	}
 }
 
-function animiere_Ausspielung(von_, bis_, feld_) {
+function animiere_Ausspielung(avon, abis, afeld) {
 	// Ausspielung , von Feld,
 	//  bis Feld,  startet bei Feld z.b. (5, 9, 5)
+	
+	var feld_davor;
+	
+	von = avon;
+	bis = abis;
+
 	setButton("stop", btn_rot_an, btnText[2]);
-	von = von_;
-	bis = bis_;
-	if (feld_ == bis + 1) feld_ = von;
+	
+	if (afeld == bis + 1) afeld = von;
 	if (ga) { // grosse A. andere Reihenfolge
-		feld = arf[feld_];
-		if (feld_ == von) feld_davor = arf[bis];
-		else feld_davor = arf[feld_ - 1];
+		feld = arf[afeld];
+		if (afeld == von) feld_davor = arf[bis];
+		else feld_davor = arf[afeld - 1];
 	}
 	else { // kleine Ausspielung
-		feld = feld_;
+		feld = afeld;
 		if (feld == von) feld_davor = bis;
 		else feld_davor = feld - 1;
 	}
-	next = feld_ + 1;
+	next = afeld + 1;
 	zeige_Feld(feld, 1);
 	zeige_Feld(feld_davor, 0);
+	
 	if ((gs == feld || gam == feld) && !ausspielung) {
 		gam = 0;
-		if (games) {
-			gewinn = gpu_games[gs];
-			ss_neu = gss[gs];
-		}
-		else {
-			gewinn = gpu_points[gs];
-		}
-		zeige_Gewinn();
+		aktualisiere_Gewinn();
 		stop_ausp_ani();
 		audio_stop();
 		setInfo(" ");
-		setTimeout("zeige_Feld(gs, 1);", 5 * spiel_tempo);
+		setTimeout("zeige_Feld(gs, 1);", 10 * spiel_tempo);
 		if (feld > 20) { // gam
 			setTimeout("zeige_Feld(feld, 0);", 20 * spiel_tempo);
 		}
-		setTimeout(starte_Risiko, 20 * spiel_tempo);
+		if (gs == 9 || gs == 20) { 
+            Hoechststufe_erreicht();
+        }
+		else {
+            setTimeout(starte_Risiko, 20 * spiel_tempo); 
+        }
 	}
 	else {
 		setTimeout("animiere_Ausspielung(von, bis, next);", 2 * spiel_tempo);
@@ -1100,8 +1123,7 @@ function einfacher_Gewinn(eg) {
 			gs = 11;
 			break;
 	}
-	gewinn = gpu_points[gs];
-	zeige_Gewinn();
+	aktualisiere_Gewinn();
 	zeige_Feld(gs, 1);
 	setTimeout(starte_Risiko, 20 * spiel_tempo);
 }
@@ -1114,9 +1136,11 @@ function Gewinnermittlung() {
 	var tmp = 0;
 	var ge = [];
 	audio_stop();
+	
 	// die ungeraden Felder sind gestreift (Gewinn in Sonderspielen)
 	gf = 0;
 	if (s2 != 1) gf = s2 % 2;
+	
 	for (i = 0; i <= 1; i++) {
 		for (j = 3; j <= 4; j++) {
 			if (disc[i][s1] == disc[j][s3]) {
@@ -1188,6 +1212,6 @@ function Gewinnermittlung() {
 		gs = 1; // temp, gestreiftes Feld
 		gewinn_in_ss();
 	}
-	if (gs == 0) setTimeout(zum_Ende, 20 * spiel_tempo);
+	if (gs == 0) setTimeout(zum_Ende, 15 * spiel_tempo);
 }
 // ENDE
