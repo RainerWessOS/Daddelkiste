@@ -111,7 +111,8 @@ var gelb = "#FFCC00";
 // Für die Farbschemen
 var bg_gruen = "#003322";
 var bg_blau = "#002233";
-var bg_black = "#003030";
+var bg_petrol = "#003030";
+var bg_black = "#000000";
 var btn_gruen_aus = "#006600";
 var btn_gruen_an = "#009900";
 var btn_blau_aus = "#2F4F4F";
@@ -197,6 +198,7 @@ function setCfgText() {
 	setText("speed", cfgText[7]);
 	setText("r_auto", cfgText[8]);
 	setText("t_auto", cfgText[9]);
+	setText("t_vol", cfgText[11]);
 	setText("c_instr", c_instr);
 	setText("c_hint", c_hint);
 	setText("c_think", c_think);
@@ -219,7 +221,8 @@ function setBtnText() {
 	setButton("mode_points", 0, btnText[10]);
 	setButton("theme_green", 0, btnText[11]);
 	setButton("theme_blue", 0, btnText[12]);
-	setButton("theme_black", 0, btnText[13]); // petrol
+	setButton("theme_petrol", 0, btnText[13]);
+    setButton("theme_black", 0, btnText[14]);
 }
 
 function change_game_mode(mode) {
@@ -259,18 +262,28 @@ function change_color_theme(theme) {
 		bg_color = bg_gruen;
 		setButton("theme_green", btn_gruen_an);
 		setButton("theme_blue", btn_grau_aus);
+		setButton("theme_petrol", btn_grau_aus);
 		setButton("theme_black", btn_grau_aus);
 	}
 	if (theme == "blue") {
 		bg_color = bg_blau;
 		setButton("theme_green", btn_grau_aus);
 		setButton("theme_blue", btn_gruen_an);
-		setButton("theme_black", btn_grau_aus);
+		setButton("theme_petrol", btn_grau_aus);
+				setButton("theme_black", btn_grau_aus);
+	}
+	if (theme == "petrol") {
+		bg_color = bg_petrol;
+		setButton("theme_green", btn_grau_aus);
+		setButton("theme_blue", btn_grau_aus);
+		setButton("theme_petrol", btn_gruen_an);
+				setButton("theme_black", btn_grau_aus);
 	}
 	if (theme == "black") {
 		bg_color = bg_black;
 		setButton("theme_green", btn_grau_aus);
 		setButton("theme_blue", btn_grau_aus);
+		setButton("theme_petrol", btn_grau_aus);
 		setButton("theme_black", btn_gruen_an);
 	}
 	setBgColor("Geraet", bg_color);
@@ -688,6 +701,11 @@ function grosse_Ausspielung_rechts() {
 function Hoechststufe_erreicht() {
 	hoechststufe = true;
 	audio_play("hauptgewinn");
+	/*
+	if ("vibrate" in window.navigator) {
+		window.navigator.vibrate(200);
+	}
+	*/
 	intH = setInterval(Lichtorgel, 800);
 	setTimeout(Gewinn_annehmen, 8 * spiel_tempo);
 }
@@ -849,7 +867,7 @@ function hochzaehlen(pu_ang, ss_ang, info) {
 function Gewinn_annehmen() {
 	
 	var steptime = 10;
-	var info = " ";
+	info = " ";
 	
 	if (!gewinn_angenommen && (gewinn > 0 || ss_neu > 0)) {
 		gewinn_angenommen = true;
@@ -886,6 +904,7 @@ function Teilgewinn_annehmen() {
 	var pu_tg = 0;
 	var ss_tg = 0;
 	var steptime = 10;
+	info = " ";
 	if (!teilgewinn_angenommen && !hoechststufe) {
 		if (gs == 1 || gs == 11) {
 			setInfo(infoText[18]);
@@ -897,7 +916,8 @@ function Teilgewinn_annehmen() {
 			if (games && ((4 < gs && gs < 9) || (14 < gs && gs < 20))) {
 				ss_neu = gss[gs];
 				ss_tg = ss_neu - gss[gs - 1];
-				// Sonderfälle: Teilen von 3 SS und 5 SS, ss_neu nach hochz. 0, // für Rundung ein paar Punkte gegeben
+				
+				// Sonderfälle: Teilen von 3 SS und 5 SS
 				if (gs == 5) {
 					ss_neu = 0;
 					ss_tg = 2;
@@ -1086,12 +1106,14 @@ function grosse_Ausspielung_mitte() {
 function gewinn_in_ss() {
 	in_ss_gewonnen = true;
 	gewinn = 200;
+	zeige_Gewinn();
 	if ((ss > 9 && (s2 != 1 || gf == 1)) || ausspielung) {
 		Gewinn_annehmen();
 	}
 	else if ((sonderspiel && ss < 10) || s2 == 1) {
 		punkte = punkte + 40;
 		gewinn = 160;
+		zeige_Gewinn();
 		gs = 14;
 		zeige_Feld(gs, 1);
 		setInfo(infoText[13] + "40" + infoText[16]);

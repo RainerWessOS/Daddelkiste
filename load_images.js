@@ -12,14 +12,16 @@
 * Bilder auf Scheibe 3 identisch Scheibe 1,
 */
 
+var i;
+var j;
 var Scheibe = [];
 
-for (let i = 0; i <= 4; i++) {
+for (i = 0; i <= 4; i++) {
 	Scheibe[i] = [];
 }
 
-for (let j = 0; j <= 4; j++) {
-	for (let i = 0; i <= 12; i++) {
+for (j = 0; j <= 4; j++) {
+	for (i = 0; i <= 12; i++) {
 		Scheibe[j][i] = new Image();
 	}
 }
@@ -41,7 +43,7 @@ Scheibe[0][10].src = "images/S30.gif";
 Scheibe[0][11].src = "images/S120.gif";
 Scheibe[0][12].src = "images/S30.gif";
 
-for (let i = 0; i <= 12; i++) {
+for (i = 0; i <= 12; i++) {
 	Scheibe[1][i] = new Image();
 }
 
@@ -80,7 +82,7 @@ Scheibe[2][10].src = "images/S80.gif";
 Scheibe[2][11].src = "images/S20m.gif";
 Scheibe[2][12].src = "images/S120.gif";
 
-for (let i = 0; i <= 12; i++) {
+for (i = 0; i <= 12; i++) {
 	Scheibe[3][i].src = Scheibe[0][i].src;
 	Scheibe[4][i].src = Scheibe[1][i].src;
 }
@@ -88,7 +90,7 @@ for (let i = 0; i <= 12; i++) {
 // 4 Bilder für Risiko: Feld an/aus und Feld auf das die Risikoautomatik gesetzt ist an/aus
 
 var Risiko = [];
-for (let i = 0; i <= 3; i++) {
+for (i = 0; i <= 3; i++) {
 	Risiko[i] = new Image();
 }
 
@@ -96,6 +98,7 @@ Risiko[0].src = "images/risiko_passiv.gif";
 Risiko[1].src = "images/risiko_aktiv.gif";
 Risiko[2].src = "images/risiko_passiv_an.gif";
 Risiko[3].src = "images/risiko_aktiv_an.gif";
+
 
 // ENDE
 

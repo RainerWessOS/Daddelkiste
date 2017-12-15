@@ -78,7 +78,8 @@ btnText = [
 "Nur Punkte",
 "Gruen",
 "Blau",
-"Petrol"
+"Petrol",
+"Schwarz"
 ];
 
 plfText = [
@@ -104,7 +105,8 @@ cfgText = [
 "Spielablaufdauer:  < schnell -- langsam >",
 "Risikoautomatik setzt ein nach:",
 "Automatische Gewinnannahme nach:",
-" Sekunden"
+" Sekunden",
+"Lautst&auml;rke:"
 ];
 
 c_instr = "Simulation eines Geldspielautomaten mit drei Scheiben, die in der Reihenfolge links, rechts, mitte stoppen. Die linke Scheibe kann einmal nachgestartet, die beiden anderen k&ouml;nnen gestoppt werden.<p>Die Startatomatik wird ein- bzw. ausgeschaltet, indem w&auml;hrend des bereits laufenden Spiels die Start-Taste bet&auml;tigt wird. Mit Startautomatik startet das n&auml;chste Spiel automatisch.<p>Mit der mittleren Taste kann die AutoStart Automatik ein- und aus geschaltet werden, die die linke Scheibe einmal neu startet, wenn keine Sonne erschienen ist.<p>Zeigen die Scheiben 3x den gleichen Betrag oder 2x den gleichen Betrag und die Sonne auf der mittleren Scheibe, wird dieser gewonnen. Gibt es zwei Gewinnkombinationen - nur bei Sonne in der Mitte m&ouml;glich- , wird der h&ouml;here Gewinn gegeben.<p>Wenn auf den drei Scheiben jeweils eine Sonne erscheint, gibt es eine grosse Ausspielung auf der rechten Seite. Erscheinen vier Sonnen, gibt es eine grosse Ausspielung auf der linken Seite. Bei f&uuml;nf Sonnen wird die grosse Ausspielung in der Mitte gegeben.<p>Alle Gewinne k&ouml;nnen risikiert werden. Gewinne oberhalb des Mindestgewinns der jeweiligen Risikoleiter k&ouml;nnen geteilt werden, auch mehrmals nacheinander, so oft gew&uuml;nscht. Nach dem Teilen wird dann eine Stufe tiefer zum Risiko angeboten und die Differenz wird auf dem Punkte- bzw. Sonderspiel-Z&auml;hler aufgez&auml;hlt.<p>Es kann eine Risiko-Automatik eingeschaltet werden, die jeden Gewinn risikiert. Die H&ouml;he bis zu der automatisch riskiert werden soll ist frei einstellbar, indem bei eingeschalteter Risikoautomatik auf die entsprechenden Felder auf der rechten und linken Risikoleiter getippt bzw. geklickt wird. Die eingestellte H&ouml;he ist an dem kleinen hellgr&uuml;nen Balken im jeweiligen Risikofeld ersichtlich.<p><b>F&uuml;r den Spielmodus mit Sonderspielen gilt zus&auml;tzlich folgendes:</b><p>Im Sonderspiel werden bei Gewinnkombination und bei  gestreiften Feldern auf der mittleren Scheibe 200 Punkte gewonnen. In Sonderspielen kann nur bei Sonne auf der mittleren Scheibe, oder bei bei einem Sonderspielz&auml;hlerstand kleiner als 10 riskiert werden, wobei 40 Punkte gleich angenommen und der Rest zum Risiko angeboten wird.  Es k&ouml;nnen unbegrenzt viele Sonderspiele gewonnen werden. Wird bei Ablauf von Sonderspielen kein Gewinn erzielt, bleibt der Sonderspielz&auml;hler auf 1, bis  gewonnen wird.<p>";
@@ -164,7 +166,8 @@ btnText = [
 "Points",
 "Green",
 "Blue",
-"Petrol"
+"Petrol",
+"Black"
 ];
 
 plfText = [
@@ -184,13 +187,14 @@ cfgText = [
 "Instructions:",
 " ",
 "Sur le jeu:",
-"Type of game:",
-"Color-Theme / Device-Color",
+"Types de jeu:",
+"Coleur de dispositif:",
 "Pourcentage de gain de risque:",
 "Vitesse de jeu:  < rapide -- lente >",
 "Risque automatique engage apres:",
 "Acceptation gagnante automatique apres:",
-" Secondes"
+" Secondes",
+"Controle du Volume:"
 ];
 
 c_instr = "Cette simulation d'une machine a sous fonctionne exactement comme celle de l'arcade a penny. Lorsque le demarrage automatique est active, les jeux sont automatiquement lances. Le demarrage automatique redemarre le premier disque quand il n'y a pas de soleil. -automatic va risquer la victoire jusqu'au niveau de risque defini, si active, en cliquant sur le champ dans l'echelle de risque gauche ou droite La hauteur de consigne est indiquee par la petite barre vert clair dans le champ de risque respectif. ";
@@ -246,7 +250,8 @@ btnText = [
 "Punti",
 "Green",
 "Blue",
-"Petrol"
+"Petrol",
+"Black"
 ]; 
 
 plfText = [
@@ -266,13 +271,14 @@ cfgText = [
 "Istruzioni:",
 " ",
 "Note sul gioco:",
-"Type of game:",
-"Color-Theme / Device-Color",
+"Tipi di gioco:",
+"Colore del dispositivo",
 "Probabilita di profitto a rischio:",
 "Durata del gioco: < veloce - lento >",
 "Controllo automatico dei rischi",
 "Accettazione automatica dei profitti dopo:",
-" Secondi"
+" Secondi",
+"Regolatore di volume:"
 ]; 
 
 c_instr = "Questa simulazione di una macchina da gioco funziona esattamente come in sala giochi. Con attivato automaticamente avviare l'automatich giri. avvio lancia il primo disco nuovo quando c'e il sole. Il rischio automatica rischia il profitto fino al livello stabilito di rischio. questo e quando attivo, impostato cliccando sulla casella sul gestore rischio sinistra o destra dovrebbe essere fino al rischiava automaticamente il livello impostato e visibile al piccolo fascio verde brillante nella rispettiva zona di rischio.";
@@ -330,7 +336,8 @@ btnText = [
 "Points",
 "Green",
 "Blue",
-"Petrol"
+"Petrol",
+"Black"
 ]; 
 
 plfText = [
@@ -350,13 +357,14 @@ cfgText = [
 "Instructies:",
 " ",
 "Opmerkingen over het spel:",
-"Type of game:",
-"Color-Theme / Device-Color",
+"Speltypes:",
+"Kleur apparaat:",
 "Winst waarschijnlijkheid risico:",
 "Spelduur:  < snel -- langzaam >",
 "Automatische risicobeheersing:",
 "Automatische winstacceptatie na:",
-" Seconden"
+" Seconden",
+"Volumeregeling:"
 ]; 
 
 c_instr = "Deze simulatie van een gaming machine werkt precies zoals in de arcade. Bij geactiveerde automatische start de spins automatich. Startup lanceert de eerste schijf weer als het geen zon is. Het risico Automatic risico's waarmee de winst tot de ingestelde niveau van het risico. dit is wanneer actief is, door te klikken op de doos op de linker- of rechterkant risicomanager moet aan de automatisch riskeerde het ingestelde niveau is te zien op het kleine heldere groene balk in het betreffende gebied van de risico's in te stellen.";
@@ -414,7 +422,8 @@ btnText = [
 "Puntos",
 "Green",
 "Blue",
-"Petrol"
+"Petrol",
+"Black"
 ]; 
 
 plfText = [ 
@@ -434,13 +443,14 @@ cfgText = [
 "Instrucciones:",
 " ",
 "Acerca de:",
-"Type of game:",
-"Color-Theme / Device-Color",
+"Tipos de juegos:",
+"Color del dispositivo:",
 "Porcentaje de ganancia de riesgo",
 "Velocidad del juego:  < rapido -- lento >",
 "Risk-automatic se compromete despues:",
 "Aceptacion ganadora automatica despues de:",
-" Segundo"
+" Segundo",
+"La intensidad de sonido:"
 ]; 
 
 c_instr = "Esta simulacion de una maquina tragamonedas funciona igual que la de la sala de peniques. Cuando se enciende el sistema automatico de inicio, los juegos se inician automaticamente. El inicio automatico reinicia el primer disco cuando no hay sol sobre el. -automatic arriesgara la ganancia hasta el nivel de riesgo establecido. Esto se establece, si esta activo, haciendo clic en el campo de la escalera de riesgo izquierda o derecha. La altura del conjunto se indica mediante la pequena barra verde clara en el campo de riesgo correspondiente."; 
@@ -498,7 +508,8 @@ btnText = [
 "Pontos",
 "Green",
 "Blue",
-"Petrol"
+"Petrol",
+"Black"
 ];
 
 plfText = [
@@ -518,13 +529,14 @@ cfgText = [
 "Instrucoes:",
 " ",
 "Notas sobre o jogo:",
-"Type of game:",
-"Color-Theme / Device-Color",
+"Tipos de jogos:",
+"Cor dispositivo:",
 "Probabilidade de lucro em risco:",
 "Duracao do jogo: < rapido - lento >",
 "Controle de Risco Automatico:",
 "Aceitacao de lucro automatico apos:",
-" Segundos"
+" Segundos",
+"Controlo de volume:"
 ];
 
 c_instr = "Esta simulacao de uma slot machine funciona da mesma maneira que na sala de jogos de arcade. Quando a funcao de inicio automatico e ativada, os jogos sao iniciados automaticamente. O AutoStart reinicia o primeiro disco quando nao ha sol. O mecanismo de risco automatico arrisca o lucro ate o nivel de risco definido. Isto e definido, se ativo, clicando no campo na escada de risco esquerda ou direita, que deve ser automaticamente arriscado. A altura ajustada e indicada pela pequena barra verde clara no respectivo campo de risco."; 
@@ -582,7 +594,8 @@ btnText = [
 "Poang",
 "Green",
 "Blue",
-"Petrol"
+"Petrol",
+"Black"
 ]; 
 
 plfText = [ 
@@ -602,13 +615,14 @@ cfgText = [
 "Instruktioner:",
 " ",
 "Handla om:",
-"Type of game:",
-"Color-Theme / Device-Color",
+"Speltyper:",
+"Enhet Faerg",
 "Riskvinstprocent:",
 "Spelhastighet:  < snabb -- langsam > ",
 "Risk-automatisk engagerar sig efter:",
 "Automatisk vinnande acceptans efter:",
-" Sekunder"
+" Sekunder",
+"Volymkontroll:"
 ];
 
 c_instr = "Denna simulering av en spelautomat fungerar precis som den i penny arkaden. Nar startautomatiken ar paslagen startas spelen automatiskt. Autostart startar om den farsta skivan nar det inte finns nagon sol pa den. Risk-automatisk riskerar vinsten upp till den faststallda risknivan. Den har installningen ar aktiv, genom att klicka pa faltet till vanster eller hoger riskstege. Den installda hojden anges med den lilla ljusgrona faltet i respektive riskfalt. "; 
@@ -666,7 +680,8 @@ btnText = [
 "Points",
 "Green",
 "Blue",
-"Petrol"
+"Petrol",
+"Black"
 ];
 
 plfText = [
@@ -692,7 +707,8 @@ cfgText = [
 "Game duration:  < fast -- slow >",
 "Risk-automatic engages after:",
 "Automatic winning acceptance after:",
-" Seconds"
+" Seconds",
+"Volume-Control:"
 ];
 
 c_instr = "This simulation of a slot machine works just like the one in the penny arcade. When the start-automatic is switched on, the games are automatically started. Autostart restarts the first disc when there is no sun on it. The risk-automatic will risk the win up to the set risk level. This is set, if active, by clicking on the field on the left or right risk ladder. The set height is indicated by the small light green bar in the respective risk field.";
