@@ -316,12 +316,12 @@ main {
   color: white;
   text-align: left;
   align: center;
-  width: 750px; 
+  width: 720px; // 750
   z-index: 5;
   background: #005500;
   border: 2px solid #F00;
   top: 0px;
-  left: 0px;
+  left: -5px;
 }
 
 .overlayHidden {
@@ -368,7 +368,7 @@ ul.topnav li a.active {
   font-size: 16px;
   font-family: Verdana;
   font-weight: bold;
-  margin-left: 80px;
+  margin-left: 50px;
 }
 
 .mode_button {
@@ -390,7 +390,7 @@ ul.topnav li a.active {
   text-align: center;
   height: 50px;
   width: 160px;
-  margin-left: 305px;
+  margin-left: 280px;
 }
 
 .links {
