@@ -10,7 +10,7 @@
      <meta name="Description" content="JavaScript implementation of a penny arcade casino game">
 	<meta name="Author" content="Rainer Wess">
 		
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     
     <script src="js/load_images.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/play_audio.js" type="text/javascript" charset="utf-8"></script>
@@ -25,15 +25,15 @@
 	
 <center>
 	<div id="Geraet_div">
-		
+		<center>
 	<main>
 		<div id="options" class="overlayHidden">
 
 			<ul class="topnav">
-				<li><a href="#c1" id="c1a" class="active">Settings</a></li>
-				<li><a href="#c1" id="c2a" onclick="show_instruction();">Instructions</a></li>
-				<li><a href="#c1" id="c3a" onclick="show_think();">Something to think</a></li>
-				<li class="right"><a href="#c1" id="c4a" onclick="show_about();">About</a></li>
+				<li class="left"><a href="#" id="c1a" class="active">Settings</a></li>
+				<li class="left"><a href="#" id="c2a" onclick="show_instruction();">Instructions</a></li>
+				<li class="left"><a href="#" id="c3a" onclick="show_think();">Something to think</a></li>
+				<li class="right"><a href="#" id="c4a" onclick="show_about();">About</a></li>
 			</ul>
 			<p>&nbsp;<p>
 				<table><tr><td width="270" valign="top">
@@ -153,10 +153,10 @@
 		<div id="instruction" class="overlayHidden">
 
 			<ul class="topnav">
-				<li><a href="#c2" id="c1b" onclick="show_config();">Settings</a></li>
-				<li><a href="#c2" id="c2b" class="active">Instructions</a></li>
-				<li><a href="#c2" id="c3b" onclick="show_think();">Something to think</a></li>
-				<li class="right"><a href="#c2" id="c4b" onclick="show_about();">About</a></li>
+				<li class="left"><a href="#" id="c1b" onclick="show_config();">Settings</a></li>
+				<li class="left"><a href="#" id="c2b" class="active">Instructions</a></li>
+				<li class="left"><a href="#" id="c3b" onclick="show_think();">Something to think</a></li>
+				<li class="right"><a href="#" id="c4b" onclick="show_about();">About</a></li>
 			</ul>
 			<p>&nbsp;<p>
 				<span id="c_instr"></span>
@@ -168,10 +168,10 @@
 <div id="think" class="overlayHidden">
 
 			<ul class="topnav">
-				<li><a href="#c3" id="c1c" onclick="show_config();">Settings</a></li>
-			    <li><a href="#c3" id="c2c" onclick="show_instruction();">Instructions</a></li>
-				<li><a href="#c3" id="c3c" class="active">Something to think</a></li>
-				<li class="right"><a href="#c3" id="c4c" onclick="show_about();">About</a></li>
+				<li class="left"><a href="#" id="c1c" onclick="show_config();">Settings</a></li>
+			    <li class="left"><a href="#" id="c2c" onclick="show_instruction();">Instructions</a></li>
+				<li class="left"><a href="#" id="c3c" class="active">Something to think</a></li>
+				<li class="right"><a href="#" id="c4c" onclick="show_about();">About</a></li>
 			</ul>
 			<p>&nbsp;<p>
 				<span id="c_think"></span>
@@ -183,10 +183,10 @@
 
 		<div id="about" class="overlayHidden">
 			<ul class="topnav">
-				<li><a href="#c4" id="c1d" onclick="show_config();">Settings</a></li>
-				<li><a href="#c4" id="c2d" onclick="show_instruction();">Instructions</a></li>
-				<li><a href="#c4" id="c3d" onclick="show_think();">Something to think</a></li>
-				<li class="right"><a href="#c4" id="c4d" class="active">About</a></li>
+				<li class="left"><a href="#" id="c1d" onclick="show_config();">Settings</a></li>
+				<li class="left"><a href="#" id="c2d" onclick="show_instruction();">Instructions</a></li>
+				<li class="left"><a href="#" id="c3d" onclick="show_think();">Something to think</a></li>
+				<li class="right"><a href="#" id="c4d" class="active">About</a></li>
 			</ul>
 			<p>&nbsp; <p>
 							<span>
@@ -619,6 +619,7 @@
 
 	</table>
 
+	</center>
 	
 		<center>
 			<p>&nbsp;<p>

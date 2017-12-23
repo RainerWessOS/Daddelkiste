@@ -94,8 +94,9 @@ von hidden auf visible setzen */
   color: #FFCC00;
   font-family: Verdana;
   font-weight: bold;
-  text-align: center;
+  text-align: right;  
 }
+
 
 #cfg_button {
   color: #FFFFFF;
@@ -152,6 +153,7 @@ von hidden auf visible setzen */
   font-weight: bold;
   font-style: italic;
   text-align: center;
+  // transform: rotate(-2deg)
 }
 
 #GA_Tabelle {
