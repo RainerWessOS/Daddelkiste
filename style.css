@@ -31,10 +31,10 @@ von hidden auf visible setzen */
 }
 
 #Geraet_div {
-	position: absolute;
-	margin: auto;
+	position: absolute
+	margin:auto;
 	align: center;
-	}
+}
 	
 #Geraet {
   border: 0;
@@ -339,12 +339,14 @@ ul.topnav {
   background-color: #333;
 }
 
-ul.topnav li {
+ul.topnav li.left {
   float: left;
+  border-right: 1px solid #bbb;
 }
 
 ul.topnav li.right {
   float: right;
+  border-left: 1px solid #bbb;
 }
 
 ul.topnav li a {
@@ -361,6 +363,8 @@ ul.topnav li a:hover:not(.active) {
 
 ul.topnav li a.active {
   background-color: #009900;
+  border-left: 1px solid #bbb;
+  border-right: 1px solid #bbb;
 }
 
 .config {
