@@ -119,7 +119,9 @@ var btn_blau_aus = "#2F4F4F";
 var btn_blau_an = "#4D8080";
 var btn_grau_aus = "#333333";
 var btn_grau_an = "#555555";
+
 // nützliche kleine Helfer Funktionen
+
 function id(id) {
 	return document.getElementById(id);
 }
