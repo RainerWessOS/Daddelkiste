@@ -459,6 +459,8 @@ function umbuchen_animieren1() {
 }
 
 function Geldeinwurf() {
+	
+	id("geldeinwurf").blur();
 	geld = geld + 10;
 	zeige_Geld();
 	setButton("geldeinwurf", btn_gruen_aus);
@@ -564,6 +566,9 @@ function Geld_zu_Punkte() {
 }
 
 function Risikotaste_gedrueckt() {
+	
+	id("risiko1").blur();
+	id("risiko2").blur();
 	if (!risikophase) {
 		if (risikoautomatik) {
 			risikoautomatik = false;
@@ -592,7 +597,10 @@ function risiko_auto() {
 }
 
 function setze_Risikostufe(rs) {
+	
 	var rsa;
+	id("feld"+rs).blur();
+	
 	if (risikoautomatik) {
 		if (rs < 10) {
 			rsa = rsr;
@@ -728,7 +736,10 @@ function starte_Spiel() {
 	auto_risiko = id("auto_risiko").value;
 	auto_annahme = id("auto_annahme").value;
 	if (punkte >= einsatz) {
+		
 		spiel_laueft_noch = true;
+		id("stop").disabled = false
+;
 		punkte = punkte - einsatz;
 		zeige_Punkte();
 		zeige_Gewinn();
@@ -775,6 +786,8 @@ function starte_Spiel() {
 }
 
 function Starttaste_gedrueckt() {
+	
+	id("start").blur();
 	if (spiel_laueft_noch) {
 		if (startautomatik) {
 			startautomatik = false;
@@ -791,6 +804,8 @@ function Starttaste_gedrueckt() {
 }
 
 function Mittetaste_gedrueckt() {
+	
+	id("mitte").blur();
 	if (risikophase) {
 		Teilgewinn_annehmen();
 	}
@@ -810,6 +825,8 @@ function Mittetaste_gedrueckt() {
 }
 
 function Stoptaste_gedrueckt() {
+	
+	id("stop").blur();
 	if (ausspielung) ausspiel_stop();
 	else if (risikophase) Gewinn_annehmen();
 	else {
@@ -873,6 +890,8 @@ function Gewinn_annehmen() {
 	
 	if (!gewinn_angenommen && (gewinn > 0 || ss_neu > 0)) {
 		gewinn_angenommen = true;
+		id("stop").disabled = true;
+		
 		if (risikophase) stop_Risiko();
 		if (!hoechststufe) audio_stop();
 		if (ss_neu > 0) {
@@ -899,6 +918,7 @@ function Gewinn_annehmen() {
 
 function Teilgewinn_freigeben() {
 	teilgewinn_angenommen = false;
+	id("mitte").disabled = false;
 	setButton("mitte", btn_rot_an);
 }
 
@@ -912,7 +932,10 @@ function Teilgewinn_annehmen() {
 			setInfo(infoText[18]);
 		}
 		else if (!gewinn_angenommen && ((1 < gs && gs < 9) || (11 < gs && gs < 20))) {
+			
 			teilgewinn_angenommen = true;
+			id("mitte").disabled = true;
+			
 			if (risikophase) stop_Risiko();
 			zeige_Feld(gs + 1, 0);
 			if (games && ((4 < gs && gs < 9) || (14 < gs && gs < 20))) {
