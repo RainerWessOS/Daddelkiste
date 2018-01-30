@@ -12,10 +12,10 @@
 		
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     
-    <script src="js/load_images.js" type="text/javascript" charset="utf-8"></script>
-	<script src="js/play_audio.js" type="text/javascript" charset="utf-8"></script>
-	<script src="js/lang.js" type="text/javascript" charset="utf-8"></script>
-	<script src="js/daddelkiste.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/load_images.js" charset="utf-8"></script>
+	<script src="js/play_audio.js" charset="utf-8"></script>
+	<script src="js/lang.js" charset="utf-8"></script>
+	<script src="js/daddelkiste.js" charset="utf-8"></script>
 	
 	<link rel="stylesheet" type="text/css" href="style.css">
 
@@ -35,7 +35,7 @@
 				<li class="left"><a href="#" id="c3a" onclick="show_think();">Something to think</a></li>
 				<li class="right"><a href="#" id="c4a" onclick="show_about();">About</a></li>
 			</ul>
-			<p>&nbsp;<p>
+			<p>&nbsp;</p>
 				<table><tr><td width="270" valign="top">
 							<form class="config">
 <span id="game_mode">Please choose game type: (Duomatic - Two games in one)</span>
@@ -69,11 +69,10 @@
                         <option>70</option>
                     </datalist>
 							</form>
-							<p>&nbsp;
-								<p>
+							<p>&nbsp;</p>
 									<form class="config" oninput="spt.value=String(spiel_tempo.value)+' %' ">
 										<label id="speed">Game duration:
-                        < fast - slow>
+                        &lt; fast - slow>
                     </label>
 										<p>
 											<input type="range" id="spiel_tempo" class="slider" value="100" min="50" max="150" step="25" list="datalist2">
@@ -86,8 +85,7 @@
                             <option>150</option>
                         </datalist>
 									</form>
-									<p>&nbsp;
-										<p>
+									<p>&nbsp;</p>
 											<form class="config" oninput="ar.value=String(auto_risiko.value) + cfgText[10]">
 												<label id="r_auto">Risk-automatic engages after:</label>
 												<p>
@@ -146,7 +144,8 @@
 													</form>
 													</td></tr></table>
 															<p>&nbsp; <p>
-															<input type="button" class="config_button" id="exit1" onclick="close_config();" value="Close"></input>
+															<input type="button" class="config_button" id="exit1" onclick="close_config();" value="Close" />
+														
 										<p>
 		</div>
 
@@ -158,11 +157,11 @@
 				<li class="left"><a href="#" id="c3b" onclick="show_think();">Something to think</a></li>
 				<li class="right"><a href="#" id="c4b" onclick="show_about();">About</a></li>
 			</ul>
-			<p>&nbsp;<p>
+			<p>&nbsp;</p>
 				<span id="c_instr"></span>
-				 <p>&nbsp;<p>
+				 <p>&nbsp;</p>
 
-							<input type="button" class="config_button"  id="exit2" onclick="close_instruction();" value="Close"></input>
+							<input type="button" class="config_button"  id="exit2" onclick="close_instruction();" value="Close" />
 							<p>
 		</div>
 <div id="think" class="overlayHidden">
@@ -173,11 +172,11 @@
 				<li class="left"><a href="#" id="c3c" class="active">Something to think</a></li>
 				<li class="right"><a href="#" id="c4c" onclick="show_about();">About</a></li>
 			</ul>
-			<p>&nbsp;<p>
+			<p>&nbsp;</p>
 				<span id="c_think"></span>
 				 <p>&nbsp; <p>
 
-							<input type="button" class="config_button"  id="exit3" onclick="close_think();" value="Close"></input>
+							<input type="button" class="config_button"  id="exit3" onclick="close_think();" value="Close" />
 							<p>
 		</div>
 
@@ -188,8 +187,7 @@
 				<li class="left"><a href="#" id="c3d" onclick="show_think();">Something to think</a></li>
 				<li class="right"><a href="#" id="c4d" class="active">About</a></li>
 			</ul>
-			<p>&nbsp; <p>
-							<span>
+			<p>&nbsp; </p>
 								<table><tr>
 			<td>
                 <h4>Daddelkiste "Duomatic"  -  Version: 0.94</h4>
@@ -200,13 +198,13 @@
                     <p>&nbsp;<p>
                     <h4 id="c_github">Herunterladen k&ouml;nnt ihr die neuste Version auf Github.com:</h4>
  <a href="https://github.com/RainerWessOS/Daddelkiste" target="_new" class="git">https://github.com/RainerWessOS/Daddelkiste</a>
-     <p>&nbsp;<p>
+     <p>&nbsp;</p>
      	</td>
-            <td><img src="images/Secret.gif" width="150" height="150" onclick="show('Funktionstest');"></td></tr></table>
- 	</span>
+            <td><img src="images/Secret.gif" width="150" height="150" alt="" onclick="show('Funktionstest');"></td></tr></table>
+ 
      <span id="c_hint"></span>
 	 <p>&nbsp; <p>
-									<input type="button"  class="config_button"  id="exit4" onclick="close_about();" value="Close"></input>
+									<input type="button"  class="config_button"  id="exit4" onclick="close_about();" value="Close" />
 									<p>
 		</div>
 
@@ -440,7 +438,7 @@
 				<table id="Risikoleiter_rechts">
 					<tr>
 						<td colspan="5" class="tdh80 rechts">
-							<input type="button" id="cfg_button" onclick="show_config();" value="Settings"></input>
+							<input type="button" id="cfg_button" onclick="show_config();" value="Settings" />
 						</td>
 					</tr>
 					<tr>
@@ -637,7 +635,7 @@
 		<p>&nbsp;<p>
 		</center>
 
-	<script type="text/javascript">
+	<script>
 	
 		var options = id('options');
 		var instruction = id('instruction');
