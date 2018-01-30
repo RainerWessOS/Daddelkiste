@@ -63,12 +63,22 @@ audioSprite.addEventListener('timeupdate', onTimeUpdate, false);
 // in mobile Safari, the first time this is called will load the audio. Ideally, we'd load the audio file completely before doing this.
 var audio_play = function(id) {
     if (spriteData[id] && spriteData[id].length) {
-    	audioSprite.pause();
+     	audioSprite.pause();
         currentSprite = spriteData[id];
         audioSprite.currentTime = currentSprite.start;
-        audioSprite.play();
+        var playPromise = audioSprite.play();
+         
+         if (playPromise !== undefined) {
+              playPromise.then(_ => {
+                 // Automatic playback started!
+              })
+             .catch(error => {
+                  // Auto-play was prevented
+              });
+          }
     }
 };
+
 
 // sometimes, we want it just quiet and don't care which sprite is playing
 var audio_stop = function() {
