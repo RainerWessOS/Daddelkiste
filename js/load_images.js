@@ -1,8 +1,8 @@
 /*
-*      Daddelkiste Duomatic Version 0.94
+*      Daddelkiste Duomatic Version 1.0
 *      Javascript implementation of an "Advanced Slot Machine"
 *
-*      Copyright  2017 Rainer Wess, Osnabrück, Germany
+*      Copyright  2018 Rainer Wess, Osnabrück, Germany
 *      Open Source / Freeware - released under GPL 2.0
 */
 
@@ -25,6 +25,7 @@ for (j = 0; j <= 4; j++) {
 		Scheibe[j][i] = new Image();
 	}
 }
+Scheibe[2][13] = new Image();
 
 // Scheibe 1 + 3 oben: (12 Felder)
 // Sonne, 30, 120, 30, Sonne, 30, 60, 30, Sonne, 30, 120, 30
@@ -81,6 +82,7 @@ Scheibe[2][9].src = "images/S30m.gif";
 Scheibe[2][10].src = "images/S80.gif";
 Scheibe[2][11].src = "images/S20m.gif";
 Scheibe[2][12].src = "images/S120.gif";
+Scheibe[2][13].src = "images/S2m.gif";
 
 for (i = 0; i <= 12; i++) {
 	Scheibe[3][i].src = Scheibe[0][i].src;
@@ -101,3 +103,4 @@ Risiko[3].src = "images/risiko_aktiv_an.gif";
 
 
 // ENDE
+
