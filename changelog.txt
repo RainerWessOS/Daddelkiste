@@ -1,29 +1,32 @@
 ToDo:
-Punkte-Mode: Multiplikator für höhere Einsatze implementieren
+Punkte-Mode: Multiplikator fÃ¼r hÃ¶here EinsÃ¤tze implementieren
 
 
 changelog:
+
+Version 1.0  2018.08.29
+Final Version 1.0 released
 
 Version 0.94  2017.12.04
 Scheibensteuerung verbessert 
 (restart Scheibe 1, die anderen stoppen schneller)
 Jetzt zwei Spielarten: Nur Punkte, oder mit Sonderspielen. Daher der Name Duomatic.
-Die Gerätefarbe ist jetzt einstellbar.
+Die GerÃ¤tefarbe ist jetzt einstellbar.
 
 Version 0.93  2017.12.01
-Punkte und Spiele zählen jetzt hoch,
+Punkte und Spiele zÃ¤hlen jetzt hoch,
 ein paar Fehlerkorrekturen und Code verbessert
 
 Version 0.92  2017.11.26
-HTML überarbeitet, sieht jetzt deutlich besser aus
+HTML Ã¼berarbeitet, sieht jetzt deutlich besser aus
 
 Version 0.90  2017.11.12
 Einstellung, Anleitung und Uber-Seite
 neu mit Navbar und erweitert
 
 Version 0.88  2017.11.04
-Layout für Chrome angepasst
-kleinere Änderungen Einstellungsseite
+Layout fÃ¼r Chrome angepasst
+kleinere Ã„nderungen Einstellungsseite
 Buttonfarben bei eingeschalteten Automatiken eingebaut
 
 
